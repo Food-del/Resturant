@@ -1,5 +1,6 @@
 import React from 'react'
 import './Header.css'
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
 return (
@@ -10,7 +11,7 @@ return (
           <h2>Order your favourite food here</h2>
           <p>
           Feeling hungry? Don’t wait! Order your favorite dishes from the best restaurants near you. Delicious food is just a click away!          </p>
-          <button>View Menu</button>
+          <NavLink to='/menu'><button>View Menu</button></NavLink>
         </div>
       </div>
       <div className="split-section right-section">
@@ -19,7 +20,7 @@ return (
           <p>
           Looking to dine out? Reserve your table at the best restaurants near you. A perfect dining experience is just a click away!
           </p>
-          <button>Make Reservation</button>
+          <NavLink to='/reservation'><button>Make Reservation</button></NavLink>
         </div>
       </div>
     </div>
