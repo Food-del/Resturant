@@ -29,13 +29,13 @@ Stay connected with us on social media for updates, special offers, and more!.</
             <div className="footer-content-right">
                 <h2>GET IN TOUCH</h2>
                 <ul>
-                    <li>+91-123-456-7890</li>
+                    <li>+91-1234984982</li>
                     <li>contact@fooddelivery@gmail.com</li>
                 </ul>
             </div>
         </div>
         <hr />
-        <p className='footer-copy-right'>© 2021 Food Delivery. All Rights Reserved.</p>
+        <p className='footer-copy-right'>© 2025 Food Delivery. All Rights Reserved.</p>
     </div>
   )
 }
