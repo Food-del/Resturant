@@ -17,6 +17,8 @@
 
 .cart-items-item img{
     width: 50px;
+    height: 50px;
+    object-fit: cover;
 }
 
 /* .cart-items-item p{

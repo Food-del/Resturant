@@ -3,6 +3,7 @@ import cors from "cors"
 import { connectDB } from "./config/db.js"
 import foodRouter from "./routes/foodRoute.js"
 import userRouter from "./routes/userRoute.js"
+import catRouter from "./routes/categoryRoute.js"
 import 'dotenv/config'
 
 
@@ -19,6 +20,8 @@ app.use(cors())
 connectDB();
 
 //api endpoints
+
+app.use("/api/food", catRouter)
 app.use("/api/food", foodRouter)
 app.use("/images",express.static('uploads'))
 app.use("/api/user",userRouter)

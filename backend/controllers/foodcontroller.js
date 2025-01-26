@@ -36,14 +36,24 @@ const listFood = async (req,res) => {
     }
 }
 
-// remove food item
+// // all category list 
+// const listCategory = async (req,res) => {
+//     try {
+//         const category = await foodModel.distinct("category");
+//         res.json({success:true,data:category})
+//     } catch (error) {
+//         console.log(error);
+//         res.json({success:false,message:"Error"})
+//     }
+// }
+
+// update food item
 const removeFood = async (req,res) => {
     try {
-        const food = await foodModel.findById(req.body.id);
-        fs.unlink(`uploads/${food.image}`,()=>{})
-
-        await foodModel.findByIdAndDelete(req.body.id);
-        res.json({success:true,message:"Food Removed"})
+        const food = await foodModel.findByIdAndUpdate(req.body.id,{status:req.body.status});
+        // fs.unlink(`uploads/${food.image}`,()=>{})
+        // await foodModel.findByIdAndDelete(req.body.id);
+        res.json({success:true,message:"Item Updated"})
 
     } catch (error) {
         console.log(error);

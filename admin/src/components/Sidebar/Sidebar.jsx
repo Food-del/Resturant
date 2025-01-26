@@ -11,6 +11,10 @@ const Sidebar = () => {
           <img src={assets.add_icon} alt="" />
           <p>Add Items</p>
         </NavLink>
+        <NavLink to='/addcategory' className="sidebar-option">
+          <img src={assets.add_icon} alt="" />
+          <p>Add Category</p>
+        </NavLink>
         <NavLink to='/list' className="sidebar-option">
           <img src={assets.list} alt="" />
           <p>List Items</p>

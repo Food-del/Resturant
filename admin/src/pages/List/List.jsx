@@ -17,8 +17,8 @@ const List = ({url}) => {
     }
    }
    
-   const removeFood =async(foodId) =>{
-    const response = await axios.post(`${url}/api/food/remove`,{id:foodId});
+   const updateFood =async(foodId,state) =>{
+    const response = await axios.post(`${url}/api/food/remove`,{id:foodId,status:state});
     await fetchList();
     if(response.data.success){
       toast.success(response.data.message)
@@ -26,6 +26,8 @@ const List = ({url}) => {
       toast.error("Error") 
     }
    }
+
+   
 
 
    useEffect(()=>{
@@ -42,18 +44,22 @@ const List = ({url}) => {
           <b>Name</b>
           <b>Category</b>
           <b>Price</b>
-          <b>Action</b>
+          <b>Active</b>
+          <b>Deactive</b>
         </div>  
         {list.map((item,index)=>{
           return(
-            <div key={index} className='list-table-format'>
+            
+            <div key={index} className={item.status?"list-table-format" : "list-table-format deactive"}>
               <img src={`${url}/images/`+item.image} alt="" />
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>${item.price}</p>
-              <p onClick={()=>removeFood(item._id)}  className='remove'>X</p>
+              <p onClick={()=>updateFood(item._id,true)}  className="active-mark">&#10003;</p>
+              <p onClick={()=>updateFood(item._id,false)}  className="remove">X</p>
             </div>
           )
+        
         })}
       </div>     
     </div>

@@ -29,8 +29,10 @@
 
 .explore-menu-list-item img{
     width: 7.5vw;
-    min-width: 80px;
+    min-width: 110px;
+    height: 110px;
     cursor: pointer;
+    object-fit: cover;
     border-radius: 50%;
     transition: 0.2s;
 }

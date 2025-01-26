@@ -7,6 +7,7 @@ const StoredContextProvider = (props) => {
 
     const [cartItems,setCartItems] = useState({});
     const url = "http://localhost:4000";
+    const [categoryList,setCategoryList] =useState([]);
     const [token,setToken] = useState("")
     const [food_list,setFoodList] = useState([])
 
@@ -46,9 +47,19 @@ const StoredContextProvider = (props) => {
         }
     }    
 
+    const fetchCategoryList = async ()=>{
+        try {
+            const response = await axios.get(url + "/api/food/add")
+            setCategoryList(response.data.data)
+        } catch (error) {
+            console.error("Error fetching food list:", error);
+        }
+    }
+
     useEffect(()=>{
         async function loadData() {
             await fetchFoodList();
+            await fetchCategoryList();
             if(localStorage.getItem("token")){
                 setToken(localStorage.getItem("token"));
             }
@@ -60,6 +71,7 @@ const StoredContextProvider = (props) => {
 
     const contextValue = {
         food_list,
+        categoryList,
         cartItems,
         setCartItems,
         addToCart,
