@@ -24,7 +24,7 @@ const LoginPopup = ({ setShowLogin }) => {
     setTimeout(() => {
       setNotification(null);
       setShowLogin(false);
-    }, 500); 
+    }, 2000); 
   };
 
   const onChangeHandler = (event) => {
