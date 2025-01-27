@@ -1,0 +1,71 @@
+.res-container{
+    background-color: rgb(234, 231, 231);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 2px solid  gray; */
+    border-radius: 10px;
+    /* margin: 0px -150px -100px -150px ;  */
+    
+}
+
+.res-header{
+ 
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.booknow-header{
+    margin-bottom: 40px;
+    color: tomato;
+    padding-top: 30px;
+}
+
+.sub-header{
+    color: rgb(70, 68, 68);
+    
+}
+
+.detail-form{
+    margin:30px
+}
+
+.detail-row{
+    display: flex;
+    gap:130px;
+    margin-bottom: 50px;
+}
+.feilds{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.feilds input,select{
+    width: 180px;
+    height: 40px;
+    border: 2px solid rgb(187, 186, 186);
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.feilds label{
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.btn{
+    margin-left: 195px;
+    width:100px;
+    height: 40px;
+    color: white;
+    font-size: 18px;
+    background:black;
+    border-radius: 4px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+}
