@@ -77,3 +77,30 @@
     font-weight: 500;
     cursor: pointer;
 }
+.info-text{
+    color: red;
+}
+
+
+/* hvfbd */
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-container input {
+    width: 100%;
+    padding-right: 40px;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #888;
+  }
+
+  
+  

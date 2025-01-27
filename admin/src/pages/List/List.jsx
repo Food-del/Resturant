@@ -54,7 +54,7 @@ const List = ({url}) => {
               <img src={`${url}/images/`+item.image} alt="" />
               <p>{item.name}</p>
               <p>{item.category}</p>
-              <p>${item.price}</p>
+              <p>₹ {item.price}</p>
               <p onClick={()=>updateFood(item._id,true)}  className="active-mark">&#10003;</p>
               <p onClick={()=>updateFood(item._id,false)}  className="remove">X</p>
             </div>
