@@ -82,16 +82,16 @@ const Add = ({ url }) => {
           <input onChange={(e) => setImage(e.target.files[0])} type="file" accept=".jpg" id="image" hidden required />
         </div>
         <div className="add-product-name flex-col">
-          <p>Product name</p>
+          <p>Dish name</p>
           <input onChange={onChangeHandler} value={data.name} type="text" name='name' placeholder='Type here' />
         </div>
         <div className="add-product-description flex-col">
-          <p>Product description</p>
+          <p>Dish description</p>
           <textarea onChange={onChangeHandler} value={data.description} name="description" rows="6" placeholder='Write content here' required></textarea>
         </div>
         <div className="add-category-price">
           <div className="add-category flex-col">
-            <p>Producct Category</p>
+            <p>Dish Category</p>
               {/* <select onChange={onChangeHandler}  name="category">
               {catList.map((item,index)=>(
                   !item.name ?null: <option key={index} value={item.name}>{item.name}</option>
@@ -120,7 +120,7 @@ const Add = ({ url }) => {
             </select>
           </div>
           <div className="add-price flex-col">
-            <p>Product price</p>
+            <p>Dish price</p>
             <input onChange={onChangeHandler} value={data.price} type="Number" name="price" placeholder='₹20' />
           </div>
         </div>

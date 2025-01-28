@@ -11,7 +11,7 @@
 
 .explore-menu-text{
     max-width: 100%;
-    color: #808080;
+    color: #393939;
 }
 
 .explore-menu-list{
@@ -39,7 +39,7 @@
 
 .explore-menu-list-item p{
     margin-top: 10px;
-    color: #747474;
+    color: #393939;
     font-size: max(1.4vw, 16px);
     cursor: pointer;
 }

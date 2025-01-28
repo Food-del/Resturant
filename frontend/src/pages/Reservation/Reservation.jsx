@@ -6,10 +6,10 @@ const Reservation = () => {
     <div className="res-container">
       <div className="res-header">
         <div className="booknow-header">
-          <h1>BOOK NOW</h1>
+          <h1>RESERVE TABLE NOW </h1>
         </div>
         <div className="sub-header">
-          <h3>Book Your Table Now And Have Great Meal!</h3>
+          <h3>Reserve Your Table Now And Have Great Meal!</h3>
         </div>
       </div>
       <div className="detail-form">

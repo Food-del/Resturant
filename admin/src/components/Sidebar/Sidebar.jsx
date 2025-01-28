@@ -9,7 +9,7 @@ const Sidebar = () => {
       <div className="sidebar-options">
         <NavLink to='/add' className="sidebar-option">
           <img src={assets.add_icon} alt="" />
-          <p>Add Items</p>
+          <p>Add Dish</p>
         </NavLink>
         <NavLink to='/addcategory' className="sidebar-option">
           <img src={assets.add_icon} alt="" />
@@ -17,7 +17,7 @@ const Sidebar = () => {
         </NavLink>
         <NavLink to='/list' className="sidebar-option">
           <img src={assets.list} alt="" />
-          <p>List Items</p>
+          <p>List Dishes</p>
         </NavLink>
         <NavLink to='/orders ' className="sidebar-option">
           <img src={assets.order_icon} alt="" />

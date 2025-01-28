@@ -23,6 +23,9 @@ const StoredContextProvider = (props) => {
     const removeFromCart = (itemId) => {
         setCartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}))
     }
+    const deleteFromCart = (itemId) => {
+        setCartItems((prev)=>({...prev,[itemId]:0}))
+    }
 
 
     const getTotalCartAmount = () => {
@@ -77,6 +80,7 @@ const StoredContextProvider = (props) => {
         addToCart,
         removeFromCart,
         getTotalCartAmount,
+        deleteFromCart,
         url,
         token,
         setToken,

@@ -57,11 +57,11 @@ const AddCategory = ({url}) => {
             <input onChange={(e)=>setImage(e.target.files[0])} type="file" accept=".jpg" id="image" hidden required />
         </div>
         <div className="add-product-name flex-col">
-          <p>Product name</p>
+          <p>Category name</p>
           <input onChange={onChangeHandler} value={data.name} type="text" name='name' placeholder='Type here' />
         </div>
         <div className="add-product-description flex-col">
-          <p>Product details</p>
+          <p>Category details</p>
           <textarea onChange={onChangeHandler} value={data.details} name="details" rows="6" placeholder='Write content here' required></textarea>
         </div>
         <button className='add-button' type='submit'>ADD</button>

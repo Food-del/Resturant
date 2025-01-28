@@ -2,10 +2,12 @@ import React, { useContext } from 'react'
 import './Cart.css'
 import { StoreContext } from '../../Context/StoreContext';
 import {useNavigate} from  'react-router-dom'
+import { assets } from '../../assets/assets';
 
 const Cart = () => {
+
    
-  const {cartItems,food_list,removeFromCart,getTotalCartAmount} = useContext(StoreContext);
+  const {cartItems,food_list,addToCart,removeFromCart,getTotalCartAmount,deleteFromCart} = useContext(StoreContext);
   const navigate = useNavigate();
 
   return (
@@ -25,14 +27,18 @@ const Cart = () => {
             if(cartItems[item._id] > 0)
             {
               return(
-                <div>
+                <div key={index}>
                   <div className='cart-items-title cart-items-item'>
                     <img src={"http://localhost:4000/images/"+item.image} alt="" />
                     <p>{item.name}</p>
                     <p>₹ {item.price}</p>
-                    <p>{cartItems[item._id]}</p>
+                    <div className='food-item-counter1'>
+                                        <img onClick={()=>removeFromCart(item._id)} src={assets.remove_icon_red}/>
+                                        <p>{cartItems[item._id]}</p>
+                                        <img onClick={()=>addToCart(item._id)} src={assets.add_icon_green}></img>
+                     </div>
                     <p>₹ {item.price * cartItems[item._id]}</p>
-                    <p onClick={()=>removeFromCart(item._id)}className="cross">x</p>
+                    <p onClick={()=>(deleteFromCart(item._id))}className="cross">x</p>
                   </div>
                   <hr />
                 </div>
