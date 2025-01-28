@@ -18,8 +18,8 @@ const Cart = () => {
           <p>Title</p>
           <p>Price</p>
           <p>Quantity</p>
-          <p>Total</p>
-          <p>Remove</p>
+          <p className='Total'>Total</p>
+          <p className='Remove'>Remove</p>
         </div>
         <br />
         <hr />

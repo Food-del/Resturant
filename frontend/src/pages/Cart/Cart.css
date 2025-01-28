@@ -4,7 +4,7 @@
 
 .cart-items-title{
     display: grid;
-    grid-template-columns: 1fr 1.5fr 1fr 1.5fr 1fr 0.5fr;
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 0.5fr;
     align-items: center;
     color: #393939;
     font-weight: 600;
@@ -47,10 +47,11 @@
     left:-15px;
     align-items: center;
     gap: 5px;
-    border: 2px solid black;
+    border: 2px solid #ededed;
     padding: 5px;
-    margin-right: 125px;
+    margin-right: 93px;
     border-radius: 50px;
+    background-color: #ededed;
 }
 
 .food-item-counter1 img{
@@ -101,4 +102,17 @@
 .cart-items-item .cross{
     margin-left: 5px;
 }
+
+.food-item-counter1{
+ 
+    margin-right: 0px;
+}
+
+.cart-items-title .Remove{
+display: none;
+}
+
+.cart-items-title .Total{
+    margin-left: 8px;
+    }
 }
