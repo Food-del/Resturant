@@ -1,6 +1,8 @@
 import { log } from "util";
 import foodModel from "../models/foodmodel.js";
 import fs from 'fs'
+import mongoose from "mongoose";
+
 
 
 // add items
@@ -19,6 +21,29 @@ const addFood = async (req,res) => {
     try {
         await food.save();
         res.json({success:true,message:"Food Added"})
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:"Error"})
+    }
+}
+
+//update Food item 
+const ObjectId =mongoose.Types.ObjectId
+
+const updateFood = async (req,res) => {
+     const id =new ObjectId(req.body.id)
+    // let image_filename = `${req.file.filename}`
+    await  foodModel.updateOne({_id:id},
+        {$set:{
+        name:req.body.name,
+        description:req.body.description,
+        price:req.body.price,
+        category:req.body.category,
+        // image:image_filename
+    }},{ upsert: false })
+   
+    try {
+        res.json({success:true,message:"Food Updated"})
     } catch (error) {
         console.log(error)
         res.json({success:false,message:"Error"})
@@ -62,4 +87,5 @@ const removeFood = async (req,res) => {
     }
 }
 
-export {addFood,listFood,removeFood}
+
+export {addFood,listFood,removeFood,updateFood}

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './List.css'
 import axios from 'axios'
 import {toast} from 'react-toastify'
-const List = ({url}) => {
+import {assets} from '../../assets/assets.js'
+const List = ({url,setUpdatePopUp,setData}) => {
    
    
    const [list,setList] =useState([]);
@@ -17,7 +18,7 @@ const List = ({url}) => {
     }
    }
    
-   const updateFood =async(foodId,state) =>{
+   const ActiveDeactiveFood =async(foodId,state) =>{
     const response = await axios.post(`${url}/api/food/remove`,{id:foodId,status:state});
     await fetchList();
     if(response.data.success){
@@ -26,6 +27,8 @@ const List = ({url}) => {
       toast.error("Error") 
     }
    }
+
+   
 
    
 
@@ -46,6 +49,7 @@ const List = ({url}) => {
           <b>Price</b>
           <b>Active</b>
           <b>Deactive</b>
+          <b>Edit</b>
         </div>  
         {list.map((item,index)=>{
           return(
@@ -55,8 +59,9 @@ const List = ({url}) => {
               <p>{item.name}</p>
               <p>{item.category}</p>
               <p>₹ {item.price}</p>
-              <p onClick={()=>updateFood(item._id,true)}  className="active-mark">&#10003;</p>
-              <p onClick={()=>updateFood(item._id,false)}  className="remove">X</p>
+              <p onClick={()=>ActiveDeactiveFood(item._id,true)}  className="active-mark">&#10003;</p>
+              <p onClick={()=>ActiveDeactiveFood(item._id,false)}  className="remove">X</p>
+              <img onClick={()=>{setUpdatePopUp(true);setData(item)}} className='Edit-Img' src={assets.Edit} alt=""/>
             </div>
           )
         
