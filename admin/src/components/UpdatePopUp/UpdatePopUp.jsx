@@ -7,32 +7,36 @@ import './UpdatePopUp.css'
 
 const UpdatePopUp = ({setUpdatePopUp,item,url}) => {
   const [catList, setCatList] = useState([]);
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState(null);
   const [data, setData] = useState({
     name: item.name,
     description: item.description,
     price: item.price,
-    category: item.image,
+    category: item.category,
   })
 
 
 
   
   const fetchCategory = async () => {
-    const response = await axios.get(`${url}/api/food/add`)
-    
-    if (response.data.success) {
-      setCatList(response.data.data);
-    } else {
-      toast.error("Error")
+    try {
+      const response = await axios.get(`${url}/api/food/add`);
+      if (response.data.success) {
+        setCatList(response.data.data);
+      } else {
+        toast.error(response.data.message || "Failed to fetch categories.");
+      }
+    } catch (error) {
+      toast.error("Error fetching categories.");
     }
-  }
+  };
+  
   
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
     fetchCategory();
-  }, [])
+  }, [url])
 
   const onChangeHandler = (event) => {
     const name = event.target.name;

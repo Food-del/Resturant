@@ -21,10 +21,10 @@ const Navbar = ({setShowLogin}) => {
     <div className='navbar'>
       <Link to='/' onClick={()=>setMenu("Home")} className={menu==="Home"?"active":""}><img src={assets.logoes} alt="" className="logo" /></Link>
       <ul className="navbar-menu">
-        <Link to="/"onClick={()=>setMenu("Home")} className={menu==="Home"?"active":""}>Home</Link>
-        <li onClick={()=>setMenu("Menu")} className={menu==="Menu"?"active":""}><NavLink to="/menu">Menu</NavLink></li>
-        <li onClick={()=>setMenu("Reservation")} className={menu==="Reservation"?"active":""}><NavLink to="/reservation">Reservation</NavLink></li>
-        <a href='#footer' onClick={()=>setMenu("Contact-us")} className={menu==="Contact-us"?"active":""}>Contact Us</a>
+        <Link to="/"onClick={()=>setMenu("Home")} className={menu==="Home"?"active":""}>HOME</Link>
+        <li onClick={()=>setMenu("Menu")} className={menu==="Menu"?"active":""}><NavLink to="/menu">MENU</NavLink></li>
+        <li onClick={()=>setMenu("Reservation")} className={menu==="Reservation"?"active":""}><NavLink to="/reservation">RESERVATION</NavLink></li>
+        <a href='#footer' onClick={()=>setMenu("Contact-us")} className={menu==="Contact-us"?"active":""}>CONTACT US</a>
       </ul>
       <div className="navbar-right">
         <img  src={assets.search_icon} alt="" />
