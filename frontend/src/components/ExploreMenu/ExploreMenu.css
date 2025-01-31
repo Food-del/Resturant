@@ -36,6 +36,9 @@
     border-radius: 50%;
     transition: 0.2s;
 }
+.explore-menu-list-item{
+    transition: transform 0.2s ease-in-out;
+}
 
 .explore-menu-list-item p{
     margin-top: 10px;
@@ -61,4 +64,8 @@
     max-width: 100%; 
     font-size: 14px;
   }
+  }
+
+  .explore-menu-list-item:hover{
+    transform: scale(1.05); 
   }
