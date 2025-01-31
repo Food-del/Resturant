@@ -28,6 +28,7 @@ const Reservation = () => {
         <div className="feilds">
             <label htmlFor="Res_name">No. of people</label>
             <select name="Num_of_Guest" id="num_of_guest">
+              <option value="select" selected>select</option>
               <option value="one">1 People</option>
               <option value="two">2 People</option>
               <option value="three">3 People</option>

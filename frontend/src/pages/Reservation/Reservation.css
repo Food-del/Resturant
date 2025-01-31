@@ -49,8 +49,8 @@
 }
 
 .feilds input,select{
-    width: 280px;
-    height: 40px;
+    width: 300px;
+    height: 45px;
     border: 2px solid rgb(187, 186, 186);
     border-radius: 4px;
     padding: 5px;
@@ -72,4 +72,8 @@
     text-align: center;
     border: none;
     cursor: pointer;
+}
+
+.info-text{
+    text-align: center;
 }
