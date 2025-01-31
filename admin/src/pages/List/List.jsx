@@ -3,9 +3,8 @@ import './List.css'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import {assets} from '../../assets/assets.js'
+
 const List = ({url,setUpdatePopUp,setData}) => {
-   
-   
    const [list,setList] =useState([]);
 
    const fetchList = async () => {

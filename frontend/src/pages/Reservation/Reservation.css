@@ -5,8 +5,10 @@
     align-items: center;
     /* border: 2px solid  gray; */
     border-radius: 10px;
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.5);
+
+
     /* margin: 0px -150px -100px -150px ;  */
-    
 }
 
 .res-header{
@@ -65,7 +67,7 @@
     height: 40px;
     color: white;
     font-size: 18px;
-    background:black;
+    background:tomato;
     border-radius: 4px;
     text-align: center;
     border: none;

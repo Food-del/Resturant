@@ -15,9 +15,6 @@ const UpdatePopUp = ({setUpdatePopUp,item,url}) => {
     category: item.category,
   })
 
-
-
-  
   const fetchCategory = async () => {
     try {
       const response = await axios.get(`${url}/api/food/add`);
@@ -34,9 +31,9 @@ const UpdatePopUp = ({setUpdatePopUp,item,url}) => {
   
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    //document.body.style.overflow = "hidden";
     fetchCategory();
-  }, [url])
+  }, [])
 
   const onChangeHandler = (event) => {
     const name = event.target.name;
@@ -44,28 +41,70 @@ const UpdatePopUp = ({setUpdatePopUp,item,url}) => {
     setData(data => ({ ...data, [name]: value }))
   }
 
+  // const onSubmitHandler = async (event) => {
+  //   event.preventDefault();
+  //   const extension = image.name.split('.').pop().toLowerCase();
+  //   if (extension === "jpeg" || extension === "jpg") {
+  //     const formData = new FormData();
+  //     formData.set("name", data.name)
+  //     formData.set("description", data.description)
+  //     formData.set("price", Number(data.price))
+  //     formData.set("category", data.category)
+  //     formData.set("image", image)
+
+  //     const response = await axios.post(`${url}/api/food/update`,{formData,id:item._id})
+     
+  //     if (response.data.success) {
+  //       setUpdatePopUp(false)
+  //     } else {
+  //       toast.error(response.data.message)
+  //     }
+  //   } else {
+  //     toast.error("Select JPG or JPEG file")
+  //   }
+  // }
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    const extension = image.name.split('.').pop().toLowerCase();
-    if (extension === "jpeg" || extension === "jpg") {
-      const formData = new FormData();
-      formData.set("name", data.name)
-      formData.set("description", data.description)
-      formData.set("price", Number(data.price))
-      formData.set("category", data.category)
-      formData.set("image", image)
 
-      const response = await axios.post(`${url}/api/food/update`,{formData,id:item._id})
-     
-      if (response.data.success) {
-        setUpdatePopUp(false)
-      } else {
-        toast.error(response.data.message)
-      }
-    } else {
-      toast.error("Select JPG or JPEG file")
+    const updatedFields = {}; // Store only changed values
+
+    // Check each field if it has changed
+    if (data.name !== item.name) updatedFields.name = data.name;
+    if (data.description !== item.description) updatedFields.description = data.description;
+    if (data.price !== item.price) updatedFields.price = Number(data.price);
+    if (data.category !== item.category) updatedFields.category = data.category;
+
+    // If an image is selected, add it
+    if (image) updatedFields.image = image;
+
+    // Check if any field has changed
+    if (Object.keys(updatedFields).length === 0) {
+        toast.info("No changes detected!");
+        return;
     }
-  }
+
+    const formData = new FormData();
+    formData.append("id", item._id); // Ensure ID is sent
+    Object.keys(updatedFields).forEach((key) => {
+        formData.append(key, updatedFields[key]);
+    });
+
+    try {
+        const response = await axios.post(`${url}/api/food/update`, formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
+
+        if (response.data.success) {
+            toast.success("Food Updated Successfully!");
+            setUpdatePopUp(false);
+        } else {
+            toast.error(response.data.message);
+        }
+    } catch (error) {
+        console.error("Update Error:", error);
+        toast.error("Failed to update food item.");
+    }
+};
 
 
   return (

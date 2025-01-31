@@ -16,6 +16,9 @@ const Footer = () => {
                         <a href='https://x.com/Food_del_reserv' target='_blank'><img src={assets.twitter_icon} alt="" /></a>
                         <a href='https://www.linkedin.com/in/food-delivery-dining-reserve?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' target='_blank'> <img src={assets.linkedin_icon} alt="" /> </a>
                     </div>
+                    <p><b>
+                    Location: Vaishnodevi Circle, Sardar Patel Ring Rd, Ahmedabad, Gujarat 382470
+                    </b></p>
                 </div>
                 <div className="footer-content-center">
                     <h2>COMPANY</h2>
