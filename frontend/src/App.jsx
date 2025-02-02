@@ -8,6 +8,9 @@ import PlaceOrder from './pages/PlaceOrder/PlaceOrder'
 import Reservation from './pages/Reservation/Reservation'
 import Footer from './components/Footer/Footer';
 import LoginPopup from './components/LoginPopup/LoginPopup'
+import Verify from './pages/verify/verify'
+import MyOrders from './pages/MyOrders/MyOrders'
+import MyReservation from './pages/MyReservation/MyReservation'
 
 
 const App = () => {
@@ -24,6 +27,9 @@ const App = () => {
           <Route path='/menu' element={<Menu />} />
           <Route path='/order' element={<PlaceOrder />} />
           <Route path='/reservation' element={<Reservation />} />
+          <Route path='/verify' element={<Verify/>} />
+          <Route path='/myorders' element={<MyOrders/> } />
+          <Route path='/myreservation' element={<MyReservation/>} />
         </Routes>
       </div>
       <Footer />
