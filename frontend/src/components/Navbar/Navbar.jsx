@@ -19,12 +19,12 @@ const Navbar = ({setShowLogin}) => {
 
   return (
     <div className='navbar'>
-      <Link to='/' onClick={()=>setMenu("Home")} className={menu==="Home"?"active":""}><img src={assets.logoes} alt="" className="logo" /></Link>
+      <Link to='/' onClick={()=>setMenu("Home")} ><img src={assets.logoes} alt="" className="logo" /></Link>
       <ul className="navbar-menu">
-        <Link to="/"onClick={()=>setMenu("Home")} className={menu==="Home"?"active":""}>HOME</Link>
+        <li onClick={()=>setMenu("Home")} className={menu==="Home"?"active":""}><NavLink to="/">HOME</NavLink></li>
         <li onClick={()=>setMenu("Menu")} className={menu==="Menu"?"active":""}><NavLink to="/menu">MENU</NavLink></li>
         <li onClick={()=>setMenu("Reservation")} className={menu==="Reservation"?"active":""}><NavLink to="/reservation">RESERVATION</NavLink></li>
-        <a href='#footer' onClick={()=>setMenu("Contact-us")} className={menu==="Contact-us"?"active":""}>CONTACT US</a>
+        <li onClick={()=>setMenu("Contact-us")} className={menu==="Contact-us"?"active":""}><NavLink to="/contactus">CONTACT US</NavLink></li>
       </ul>
       <div className="navbar-right">
         <img  src={assets.search_icon} alt="" />
@@ -36,11 +36,11 @@ const Navbar = ({setShowLogin}) => {
         :<div className='navbar-profile'>
           <img src={assets.profile_icon} alt="" />
           <ul className='nav-profile-dropdown'>
-          <li><img src={assets.profile_drop} alt="" /><p>Profile</p></li>
+          <li onClick={()=>navigate('/myprofile')}><img src={assets.profile_drop} alt="" /><p>Profile</p></li>
           <hr />
           <li onClick={()=>navigate('/myorders')}><img src={assets.bag} alt="" /><p>Orders</p></li>
           <hr />
-          <li><img src={assets.res_drop} alt="" /><p>Reservation</p></li>
+          <li onClick={()=>navigate('/myreservation')}><img src={assets.res_drop} alt="" /><p>Reservation</p></li>
           <hr />
           <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
 

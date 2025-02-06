@@ -3,8 +3,8 @@ import './MyReservation.css'
 
 const MyReservation = () => {
   return (
-    <div>
-        My Reservation
+    <div className='reservation'>
+       My Reservations
     </div>
   )
 }

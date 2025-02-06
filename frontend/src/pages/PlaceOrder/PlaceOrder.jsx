@@ -83,7 +83,7 @@ const onChangeHandler = (event) => {
          </div>
          <div className="multi-fields">
            <input required name='city' onChange={onChangeHandler} value={data.city} type="text" placeholder='City'/>
-           <input required name='phone' onChange={onChangeHandler} value={data.phone} type="number" placeholder='Phone-No'/>
+           <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='Phone-No' minLength="10" maxLength="10" pattern="^\d{10}$" onInput={(e) => e.target.value = e.target.value.replace(/\D/g, '')}/>
           </div>
       </div>
       <div className="place-order-right">

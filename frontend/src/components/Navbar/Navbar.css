@@ -38,11 +38,11 @@
     background-color: #fff4f2;
 }
 
-/* .navbar .active {
+.navbar .active {
     color: tomato;
     padding-bottom: 2px;
     border-bottom: 2px solid #49557e;
-} */
+}
 
 .navbar .active img{
     filter: grayscale(0%);

@@ -41,7 +41,7 @@
     font-size: 15px;
 }
 
-.food-item-counter1{
+/* .food-item-counter1{
     position: relative;
     display: flex;
     left:-15px;
@@ -52,6 +52,18 @@
     margin-right: 93px;
     border-radius: 50px;
     background-color: #ededed;
+} */
+
+.food-item-counter1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between buttons */
+    border: 2px solid #ededed;
+    padding: 5px 8px; /* Adjust padding to fit buttons */
+    border-radius: 50px;
+    background-color: #ededed;
+    width: fit-content; /* Only cover the buttons */
 }
 
 .food-item-counter1 img{

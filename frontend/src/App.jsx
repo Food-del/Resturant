@@ -11,6 +11,7 @@ import LoginPopup from './components/LoginPopup/LoginPopup'
 import Verify from './pages/verify/verify'
 import MyOrders from './pages/MyOrders/MyOrders'
 import MyReservation from './pages/MyReservation/MyReservation'
+import MyProfile from './pages/MyProfile/MyProfile'
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path='/verify' element={<Verify/>} />
           <Route path='/myorders' element={<MyOrders/> } />
           <Route path='/myreservation' element={<MyReservation/>} />
+          <Route path='/myprofile' element={<MyProfile/>} />
         </Routes>
       </div>
       <Footer />
