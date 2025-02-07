@@ -27,11 +27,22 @@ const LoginPopup = ({ setShowLogin }) => {
     }, 2000); 
   };
 
+  // const onChangeHandler = (event) => {
+  //   const name = event.target.name;
+  //   const value = event.target.value;
+  //   setData((data) => ({ ...data, [name]: value }));
+  // };
   const onChangeHandler = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    setData((data) => ({ ...data, [name]: value }));
+    const { name, value } = event.target;
+  
+    if (name === "name") {
+      // Allow only alphabets and spaces
+      if (!/^[a-zA-Z\s]*$/.test(value)) return;
+    }
+  
+    setData((prevData) => ({ ...prevData, [name]: value }));
   };
+  
 
   const onLogin = async (event) => {
     event.preventDefault();
