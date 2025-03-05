@@ -1,21 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './List.css'
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import {assets} from '../../assets/assets.js'
+import { AdminContext } from '../../contexts/AdminContext.jsx'
 
 const List = ({url,setUpdatePopUp,setData}) => {
-   const [list,setList] =useState([]);
-
-   const fetchList = async () => {
-    const response = await axios.get(`${url}/api/food/list`)
-  
-    if(response.data.success){
-      setList(response.data.data);
-    }else{
-      toast.error("Error") 
-    }
-   }
+  const{focus,setFocus,fetchList,list} =useContext(AdminContext)
+   
    
    const ActiveDeactiveFood =async(foodId,state) =>{
     const response = await axios.post(`${url}/api/food/remove`,{id:foodId,status:state});
@@ -34,7 +26,7 @@ const List = ({url,setUpdatePopUp,setData}) => {
 
    useEffect(()=>{
     fetchList();
-   },[])
+   },[focus])
 
 
   return (
@@ -60,7 +52,7 @@ const List = ({url,setUpdatePopUp,setData}) => {
               <p>₹ {item.price}</p>
               <p onClick={()=>ActiveDeactiveFood(item._id,true)}  className="active-mark">&#10003;</p>
               <p onClick={()=>ActiveDeactiveFood(item._id,false)}  className="remove">X</p>
-              <img onClick={()=>{setUpdatePopUp(true);setData(item)}} className='Edit-Img' src={assets.Edit} alt=""/>
+              <img onClick={()=>{setUpdatePopUp(true);setData(item);setFocus}} className='Edit-Img' src={assets.Edit} alt=""/>
             </div>
           )
         

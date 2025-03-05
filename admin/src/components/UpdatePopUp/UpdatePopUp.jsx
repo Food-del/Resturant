@@ -1,19 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState,useEffect } from 'react';
 import axios from 'axios';
 import {toast} from 'react-toastify'
 import {assets} from '../../assets/assets.js'
 import './UpdatePopUp.css'
+import { AdminContext } from '../../contexts/AdminContext.jsx';
 
 const UpdatePopUp = ({setUpdatePopUp,item,url}) => {
+  const {setFocus,fetchList} = useContext(AdminContext)
   const [catList, setCatList] = useState([]);
   const [image, setImage] = useState(null);
   const [data, setData] = useState({
+    id:item._id,
     name: item.name,
     description: item.description,
     price: item.price,
     category: item.category,
+    img:image,
   })
+ 
 
   const fetchCategory = async () => {
     try {
@@ -35,82 +40,67 @@ const UpdatePopUp = ({setUpdatePopUp,item,url}) => {
     fetchCategory();
   }, [])
 
-  const onChangeHandler = (event) => {
+  
+ const onChangeHandler = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setData(data => ({ ...data, [name]: value }))
+    setData(prev => ({ ...prev, [name]: value }))
   }
 
-  // const onSubmitHandler = async (event) => {
-  //   event.preventDefault();
-  //   const extension = image.name.split('.').pop().toLowerCase();
-  //   if (extension === "jpeg" || extension === "jpg") {
-  //     const formData = new FormData();
-  //     formData.set("name", data.name)
-  //     formData.set("description", data.description)
-  //     formData.set("price", Number(data.price))
-  //     formData.set("category", data.category)
-  //     formData.set("image", image)
-
-  //     const response = await axios.post(`${url}/api/food/update`,{formData,id:item._id})
-     
-  //     if (response.data.success) {
-  //       setUpdatePopUp(false)
-  //     } else {
-  //       toast.error(response.data.message)
-  //     }
-  //   } else {
-  //     toast.error("Select JPG or JPEG file")
-  //   }
-  // }
-  const onSubmitHandler = async (event) => {
+const onSubmitHandler = async (event) => {
     event.preventDefault();
 
-    const updatedFields = {}; // Store only changed values
-
-    // Check each field if it has changed
-    if (data.name !== item.name) updatedFields.name = data.name;
-    if (data.description !== item.description) updatedFields.description = data.description;
-    if (data.price !== item.price) updatedFields.price = Number(data.price);
-    if (data.category !== item.category) updatedFields.category = data.category;
-
-    // If an image is selected, add it
-    if (image) updatedFields.image = image;
-
-    // Check if any field has changed
-    if (Object.keys(updatedFields).length === 0) {
-        toast.info("No changes detected!");
-        return;
-    }
 
     const formData = new FormData();
-    formData.append("id", item._id); // Ensure ID is sent
-    Object.keys(updatedFields).forEach((key) => {
-        formData.append(key, updatedFields[key]);
+    if (!image) {
+        console.error("No image selected!");
+        return;
+    }
+    if (!data.name || !data.description || !data.price || !data.category) {
+        console.error("Missing required fields in `data`");
+        return;
+    }
+    // Validate Image Extension
+    const extension = image.name.split('.').pop().toLowerCase();
+    if (["jpeg", "jpg"].includes(extension)) {
+      const formData = new FormData();
+    // Append object data (Convert object values to strings if needed)
+    Object.keys(data).forEach(key => {
+    formData.append(key, data[key]);    
     });
 
-    try {
-        const response = await axios.post(`${url}/api/food/update`, formData, {
-            headers: { "Content-Type": "multipart/form-data" }
-        });
-
-        if (response.data.success) {
-            toast.success("Food Updated Successfully!");
-            setUpdatePopUp(false);
-        } else {
-            toast.error(response.data.message);
-        }
-    } catch (error) {
-        console.error("Update Error:", error);
-        toast.error("Failed to update food item.");
+    // Append image file (if available)
+    if (image) {
+    formData.append("image", image); // Assuming `image` is a File object
+    formData.append("prevImage",item.image)
     }
-};
+
+    // Send request with FormData
+    const response = await axios.post(`${url}/api/food/update`, formData, {
+    headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+     
+      if (response.data.success) {
+        setUpdatePopUp(false)
+        toast.success(response.data.message)
+        formData.delete("prevImage")
+        fetchList()
+      } else {
+        toast.error(response.data.message)
+      }
+    } else {
+      toast.error("Select JPG or JPEG file")
+    }
+ } 
 
 
   return (
     <div className='update'>
     <div className='update-container'>
-    <img  className="close" onClick={() => setUpdatePopUp(false)} src={assets.cross_icon} alt="" />
+    <img  className="close" onClick={() => {setUpdatePopUp(false);setFocus(true)}} src={assets.cross_icon} alt="" />
           <form onSubmit={onSubmitHandler} className="flex-col">
             <div className="update-img-uplode flex-col">
               <p>Uplode Image</p>
@@ -131,20 +121,6 @@ const UpdatePopUp = ({setUpdatePopUp,item,url}) => {
             <div className="update-category-price">
               <div className="update-category flex-col">
                 <p>Dish Category</p>
-                  {/* <select onChange={onChangeHandler}  name="category">
-                  {catList.map((item,index)=>(
-                      !item.name ?null: <option key={index} value={item.name}>{item.name}</option>
-                    ))}
-                    { /*<option value="Salad">Salad</option>
-                    <option value="Rolls">Rolls</option>
-                    <option value="Deserts">Deserts</option>
-                    <option value="Sandwich">Sandwich</option>
-                    <option value="Cake">Cake</option>
-                    <option value="Pure Veg">Pure Veg</option>
-                    <option value="Pasta">Pasta</option>
-                    <option value="Noodles">Noodles</option> */
-                    //</select> */}
-                }
                 <select onChange={onChangeHandler} id="slt" name="category" value={data.category}  required>
                   <option value="" disabled selected>
                     Select Category

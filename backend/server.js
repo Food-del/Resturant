@@ -16,6 +16,7 @@ const port = 4000
 
 //middleware
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 
 // db connection 
@@ -29,6 +30,7 @@ app.use("/images",express.static('uploads'))
 app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
+
 
 
 
