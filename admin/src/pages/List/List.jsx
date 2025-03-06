@@ -6,7 +6,7 @@ import {assets} from '../../assets/assets.js'
 import { AdminContext } from '../../contexts/AdminContext.jsx'
 
 const List = ({url,setUpdatePopUp,setData}) => {
-  const{focus,setFocus,fetchList,list} =useContext(AdminContext)
+  const{focus,setFocus,fetchList,list,cat} =useContext(AdminContext)
    
    
    const ActiveDeactiveFood =async(foodId,state) =>{
@@ -43,12 +43,14 @@ const List = ({url,setUpdatePopUp,setData}) => {
           <b>Edit</b>
         </div>  
         {list.map((item,index)=>{
+          const cnt = cat.find(obj => obj._id == item.category)
           return(
             
             <div key={index} className={item.status?"list-table-format" : "list-table-format deactive"}>
               <img src={`${url}/images/`+item.image} alt="" />
+              {console.log(cnt)}
               <p>{item.name}</p>
-              <p>{item.category}</p>
+              <p>{cnt.name}</p>
               <p>₹ {item.price}</p>
               <p onClick={()=>ActiveDeactiveFood(item._id,true)}  className="active-mark">&#10003;</p>
               <p onClick={()=>ActiveDeactiveFood(item._id,false)}  className="remove">X</p>

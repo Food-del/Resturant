@@ -10,9 +10,15 @@ const AdminContextProvider = (props)=>{
     const [dishCount,setDishcount]=useState()
     const [list,setList] =useState([]);
     const [catlist,setCatList] =useState([]);
+    const [cat,setCat] = useState({})
+
+
+
     const fetchList = async () => {
-     const response = await axios.get(`${url}/api/food/list`)
-   
+     const response = await axios.get(`${url}/api/food/listfood`)
+     const catResponse = await axios.get(`${url}/api/food/list`);
+     const categories = catResponse.data.data; 
+     setCat(categories)
      if(response.data.success){
        setList(response.data.data);
      }else{
@@ -27,8 +33,7 @@ const AdminContextProvider = (props)=>{
         
         //  Extract correct data structure
         const categories = catResponse.data.data; // Ensure it's an array
-        const dishes = dishResponse.data.data; 
-
+        const dishes = dishResponse.data.data;
         //  Check if categories is an array before using .map()
         if (!Array.isArray(categories)) {
             throw new Error("Categories data is not an array");
@@ -70,7 +75,8 @@ const AdminContextProvider = (props)=>{
       list,
       fetchcatList ,
       catlist,
-      dishCount
+      dishCount,
+      cat
     }
 
     return (
