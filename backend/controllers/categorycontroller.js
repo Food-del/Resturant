@@ -31,5 +31,22 @@ const addCategory = async (req,res) => {
     }
 }
 
+//deactivte category
+const removeCat = async (req,res) => {
+    try {
+        const cat = await categoryModel.findByIdAndUpdate(req.body.id,{status:req.body.status});
+        // fs.unlink(`uploads/${food.image}`,()=>{})
+        // await foodModel.findByIdAndDelete(req.body.id);
+            
+        
+            res.json({success:true,message:"Item Updated"})
+        
 
-export {listCategory,addCategory};
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Error"});
+        
+    }
+}
+
+export {listCategory,addCategory,removeCat};

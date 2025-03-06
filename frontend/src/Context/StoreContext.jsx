@@ -50,8 +50,9 @@ const StoredContextProvider = (props) => {
 
     const fetchFoodList = async () => {
         try {
-            const response = await axios.get(url + "/api/food/list");
+            const response = await axios.get(url + "/api/food/listfood");
             setFoodList(response.data.data);
+          
         } catch (error) {
             console.error("Error fetching food list:", error);
         }

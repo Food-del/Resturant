@@ -10,7 +10,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import UpdatePopUp from './components/UpdatePopUp/UpdatePopUp'
 import Reservations from './pages/Reservations/Reservations'
-
+import CategoryList from './pages/CategoryList/CategoryList'
 const App = () => {
  const [updatePopUp,setUpdatePopUp] =useState(false)
  const [data,setData] =useState({})
@@ -29,6 +29,7 @@ const App = () => {
           <Route path="/add" element={<Add url={url}/>}/>
           <Route path="/addcategory" element={<AddCategory url={url}/>}/>
           <Route path="/list" element={<List url={url} setUpdatePopUp={setUpdatePopUp} setData={setData}/>}/>
+          <Route path="/categorylist" element={<CategoryList url={url}/>}/>
           <Route path="/orders" element={<Orders url={url}/>}/>
           <Route path='/reservations' element={<Reservations/>} />
           

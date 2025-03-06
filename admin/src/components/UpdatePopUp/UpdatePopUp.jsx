@@ -53,14 +53,15 @@ const onSubmitHandler = async (event) => {
 
     const formData = new FormData();
     if (!image) {
-        console.error("No image selected!");
-        return;
+        
     }
     if (!data.name || !data.description || !data.price || !data.category) {
         console.error("Missing required fields in `data`");
         return;
     }
     // Validate Image Extension
+   
+   if (image){
     const extension = image.name.split('.').pop().toLowerCase();
     if (["jpeg", "jpg"].includes(extension)) {
       const formData = new FormData();
@@ -70,10 +71,8 @@ const onSubmitHandler = async (event) => {
     });
 
     // Append image file (if available)
-    if (image) {
     formData.append("image", image); // Assuming `image` is a File object
     formData.append("prevImage",item.image)
-    }
 
     // Send request with FormData
     const response = await axios.post(`${url}/api/food/update`, formData, {
@@ -94,7 +93,30 @@ const onSubmitHandler = async (event) => {
     } else {
       toast.error("Select JPG or JPEG file")
     }
- } 
+ } else{
+
+    Object.keys(data).forEach(key => {
+    formData.append(key, data[key]);    
+    });
+ 
+    // Send request with FormData
+    const response = await axios.post(`${url}/api/food/update`, formData, {
+    headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+      if (response.data.success) {
+        setUpdatePopUp(false)
+        toast.success(response.data.message)
+        formData.delete("prevImage")
+        fetchList()
+      } else {
+        toast.error(response.data.message)
+
+ }
+ }
+}
 
 
   return (
@@ -108,7 +130,7 @@ const onSubmitHandler = async (event) => {
                 <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
                 
               </label>
-              <input onChange={(e) => setImage(e.target.files[0])} type="file" accept=".jpg" id="image" hidden required  />
+              <input onChange={(e) => setImage(e.target.files[0])} type="file" accept=".jpg" id="image" hidden/>
             </div>
             <div className="update-product-name flex-col">
               <p>Dish name</p>

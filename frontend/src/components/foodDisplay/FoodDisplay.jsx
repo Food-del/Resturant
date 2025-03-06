@@ -35,6 +35,7 @@ const FoodDisplay = ({ category = "All" }) => {
             <h2>Top Dishes</h2>
             <div className="food-display-list">
                 {food_list.map((item, index) => (
+                    
                     ((category === "All" && item.status===true) || (category === item.category && item.status === true)) ? (
                         <FoodItem
                             key={index}
@@ -44,7 +45,7 @@ const FoodDisplay = ({ category = "All" }) => {
                             price={item.price}
                             image={item.image}
                         />
-                    ) : null
+                    ) : console.log(item)
                      ))}
             </div>
         </div>

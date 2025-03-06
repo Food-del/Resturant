@@ -1,5 +1,5 @@
 import express from "express"
-import { addCategory, listCategory } from "../controllers/categorycontroller.js";
+import { addCategory, listCategory,removeCat } from "../controllers/categorycontroller.js";
 import multer from "multer"
 
 const catRouter = express.Router()
@@ -19,5 +19,6 @@ const upload = multer({storage:storage})
 
 catRouter.get("/add",listCategory)
 catRouter.post("/addcategory",upload.single("image"),addCategory)
-
+catRouter.get("/list",listCategory)
+catRouter.post("/removecat",removeCat);
 export default catRouter;
