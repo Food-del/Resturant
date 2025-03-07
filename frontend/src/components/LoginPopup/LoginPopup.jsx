@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Eye, EyeOff } from 'lucide-react';
 
 const LoginPopup = ({ setShowLogin }) => {
-  const { url, setToken } = useContext(StoreContext);
+  const { url, setToken,setUser ,setIsLogged} = useContext(StoreContext);
 
   const [currState, setCurrState] = useState('Login');
   const [data, setData] = useState({
@@ -76,7 +76,11 @@ const LoginPopup = ({ setShowLogin }) => {
         setToken(response.data.token);
         localStorage.setItem('token', response.data.token);
         showNotification('Login successful!', 'success');
+        setIsLogged(true)
+        setUser(response.data.user)
         setFormVisible(false); 
+
+
       } else {
         showNotification(response.data.message, 'error');
       }

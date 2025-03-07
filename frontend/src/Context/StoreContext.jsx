@@ -10,6 +10,8 @@ const StoredContextProvider = (props) => {
     const [categoryList,setCategoryList] =useState([]);
     const [token,setToken] = useState("")
     const [food_list,setFoodList] = useState([])
+    const [user,setUser]= useState({})
+    const [isLogged,setIsLogged]=useState(false)
 
     const addToCart = async (itemId) => {
         if(!cartItems[itemId]){
@@ -100,6 +102,10 @@ const StoredContextProvider = (props) => {
         url,
         token,
         setToken,
+        setUser,
+        user,
+        isLogged,
+        setIsLogged
     }
     return (
         <StoreContext.Provider value={contextValue}>

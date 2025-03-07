@@ -7,14 +7,14 @@ import { StoreContext } from '../../Context/StoreContext';
 const Navbar = ({setShowLogin}) => {
 
   const [menu,setMenu] = useState("Home");
-  const {getTotalCartAmount,token,setToken} =useContext(StoreContext)
+  const {getTotalCartAmount,token,setToken,setIsLogged} =useContext(StoreContext)
   const navigate = useNavigate()
 
   const logout = () =>{
     localStorage.removeItem("token");
     setToken("");
     navigate("/")
-   
+    setIsLogged(false)
   }
 
   return (
