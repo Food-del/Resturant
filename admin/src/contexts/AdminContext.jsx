@@ -29,7 +29,7 @@ const AdminContextProvider = (props)=>{
    const fetchcatList = async () => {
     try {
         const catResponse = await axios.get(`${url}/api/food/list`);
-        const dishResponse = await axios.get(`${url}/api/food/list`);
+        const dishResponse = await axios.get(`${url}/api/food/listfood`);
         
         //  Extract correct data structure
         const categories = catResponse.data.data; // Ensure it's an array
@@ -38,11 +38,11 @@ const AdminContextProvider = (props)=>{
         if (!Array.isArray(categories)) {
             throw new Error("Categories data is not an array");
         }
-
+        
         // Use .map() safely
         const catDishCount = categories.map((category) => {
             const count = dishes.filter(dish => 
-                dish.category=== category._Id// Ensure matching logic is correct
+                dish.category === category._id// Ensure matching logic is correct
             ).length;
             return {
                 category: category.name,

@@ -149,7 +149,7 @@ const onSubmitHandler = async (event) => {
                   </option>
                   {catList.map((cat, index) =>
                     cat.name ? (
-                      <option key={index} value={cat.name}>
+                      <option key={index} value={cat._id}>
                         {cat.name}
                       </option>
                     ) : null

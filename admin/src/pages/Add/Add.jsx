@@ -112,7 +112,7 @@ const Add = ({ url }) => {
               </option>
               {catList.map((item, index) =>
                 item.name ? (
-                  <option key={index} value={item.name}>
+                  <option key={index} value={item._id}>
                     {item.name}
                   </option>
                 ) : null
