@@ -9,7 +9,7 @@ const ContactUs = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const[ispublic,setIsPublic]= useState(true)
-const [data,setData]= useState({
+    const [data,setData]= useState({
     userId:'',
     email:'',
     isPublic:ispublic ? true:false ,
@@ -58,7 +58,7 @@ useEffect(() => {
 
   return (
     <div className='fed-outer-container'>
-        <h1>Give us your valueble feedback</h1>
+        <h1 className='feed-h1'>Give us your valueble feedback</h1>
     <form onSubmit={ isLogged ? onSubmmitHandler : (e)=>{e.preventDefault();toast.error("You Need To Login")} }>
         <div className='fed-inner-container'>
         <div className='fed-filed'>
@@ -87,7 +87,7 @@ useEffect(() => {
      <label htmlFor="feedbacktext">What you want to say?</label>
      <textarea rows="8" cols="45" name="feedbacktxt" id="feedbacktext" required placeholder="Give us your experience" value={data.feedbacktxt} onChange={onChangeHandler}></textarea>
       </div>
-     <button type="submit">Submit</button>
+     <button type="submit" id='submit'>Submit</button>
       </div>
      </form>
      

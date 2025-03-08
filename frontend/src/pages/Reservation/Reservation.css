@@ -1,5 +1,5 @@
 .res-container{
-    background-color: rgb(234, 231, 231);
+    background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,7 @@
 
 
 .sub-header{
-    color: rgb(70, 68, 68);
+    color: #262626;
     
 }
 
@@ -42,13 +42,13 @@
     gap:130px;
     margin-bottom: 50px;
 }
-.feilds{
+.fields{
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.feilds input,select{
+.fields input,select{
     width: 300px;
     height: 45px;
     border: 2px solid rgb(187, 186, 186);
@@ -56,7 +56,7 @@
     padding: 5px;
 }
 
-.feilds label{
+.fields label{
     font-weight: 500;
     font-size: 18px;
 }
@@ -75,5 +75,5 @@
 }
 
 .info-text{
-    text-align: center;
+    text-align: left;
 }

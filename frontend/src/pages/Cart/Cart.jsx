@@ -44,7 +44,6 @@ const Cart = () => {
                 </div>
               )
             }
-
         })}
       </div>
       <div className="cart-bottom">

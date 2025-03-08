@@ -94,7 +94,6 @@ const onChangeHandler = (event) => {
             <p>₹ {getTotalCartAmount()}</p>
           </div>
           <hr />
-
           <div className="cart-total-details">
             <b>Delivery Fee</b>
             <b>₹ {getTotalCartAmount()===0?0:50}</b>

@@ -14,6 +14,7 @@ import MyReservation from './pages/MyReservation/MyReservation'
 import MyProfile from './pages/MyProfile/MyProfile'
 import ContactUs from './pages/ContactUs/ContactUs'
 import { ToastContainer } from 'react-toastify'
+import Verifi from './pages/Verifi/Verifi'
 
 const App = () => {
 
@@ -35,6 +36,7 @@ const App = () => {
           <Route path='/myreservation' element={<MyReservation/>} />
           <Route path='/myprofile' element={<MyProfile/>} />
           <Route path='/contactus' element={<ContactUs/>}/>
+          <Route path='/verifi' element={<Verifi/>}></Route>
         </Routes>
       </div>
       <Footer />

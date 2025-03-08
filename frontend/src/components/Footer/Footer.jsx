@@ -40,7 +40,7 @@ const Footer = () => {
                 </div>
             </div>
             <hr />
-            <p className='footer-copy-right'>© 2025 Food Delivery. All Rights Reserved.</p>
+            <p className='footer-copy-right'>*Online Food Delivery And Dining Reservation</p>
         </div>
     )
 }

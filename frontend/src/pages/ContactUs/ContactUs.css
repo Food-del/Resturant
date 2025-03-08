@@ -13,7 +13,7 @@
 }
 
 .fed-inner-container{
-    color: rgb(48, 47, 47);
+    color: #262626;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -61,7 +61,7 @@
     margin-top: 10px;
 }
 
-button{
+#submit {
 background-color: tomato;
 margin-top: 20px;
 border: transparent ;
@@ -70,7 +70,10 @@ color: white;
 padding: 8px;
 }
 
-
+.fed-outer-container h1{
+    /* font-size: 25px; */
+    color: tomato;
+}
 @media (max-width:750px){
    
     .fed-outer-container{
@@ -81,6 +84,7 @@ padding: 8px;
 
     .fed-outer-container h1{
         font-size: 25px;
+        color: tomato;
     }
 
 }

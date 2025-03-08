@@ -8,6 +8,7 @@ import 'dotenv/config'
 import cartRouter from "./routes/cartRoute.js"
 import orderRouter from "./routes/orderRoute.js"
 import fedRouter from "./routes/feedbackRoute.js"
+import ReservationRouter from "./routes/ReservationRoute.js"
 
 
 //app config
@@ -19,7 +20,12 @@ const port = 4000
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
-
+// app.use((req, res, next) => {
+//     console.log(`Received request: ${req.method} ${req.url}`);
+//     console.log('Headers:', req.headers);
+//     console.log('Body:', req.body);
+//     next();
+// });
 // db connection 
 connectDB();
 
@@ -32,7 +38,7 @@ app.use("/api/user",userRouter)
 app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
 app.use("/api/contact",fedRouter)
-
+app.use("/api/reservation",ReservationRouter)
 
 
 
