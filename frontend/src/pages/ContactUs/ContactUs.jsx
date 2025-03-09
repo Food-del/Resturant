@@ -11,6 +11,7 @@ const ContactUs = () => {
     const[ispublic,setIsPublic]= useState(true)
     const [data,setData]= useState({
     userId:'',
+    userName:'',
     email:'',
     isPublic:ispublic ? true:false ,
     feedbacktxt:''
@@ -27,6 +28,7 @@ const onSubmmitHandler = async (e)=>{
   e.preventDefault()
   data.isPublic=ispublic
   data.userId=user._id
+  data.userName=user.name
   console.log(data)
   const response= await axios.post(`${url}/api/contact/add`,data)
       if (response.data.success) {

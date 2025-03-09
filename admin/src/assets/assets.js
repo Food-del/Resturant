@@ -7,6 +7,9 @@ import parcel_icon from './parcel_icon.png'
 import list from './list.png'
 import Edit from './Edit.png'
 import cross_icon from './cross_icon.png'
+import reserv from './dining-table.png'
+import foodpackage from './food-delivery.png'
+import feedback from './talk.png'
 
 export const assets ={
     logo,
@@ -18,6 +21,9 @@ export const assets ={
     list,
     Edit,
     cross_icon,
+    reserv,
+    foodpackage,
+    feedback,
 }
 
 export const url = 'http://localhost:4000'

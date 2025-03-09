@@ -29,12 +29,12 @@ const CategoryList = ({url}) => {
 
  return (
      <div className='clist add flex-col' >
-       <p>All Category List</p>
+       <h2 style={{color:"black"}}>All Category List</h2>
        <div className="clist-table">
          <div className="clist-table-format title">
            <b>Image</b>
            <b>Category</b>
-           <b>Dishes</b>
+           <b class='dishes'>Dishes</b>
            <b>Active</b>
            <b>Deactive</b>
            <b>Edit</b>

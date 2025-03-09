@@ -23,13 +23,17 @@ const Sidebar = () => {
           <img src={assets.list} alt="" />
           <p>List Categories</p>
         </NavLink> 
-        <NavLink to='/orders ' className="sidebar-option">
+        <NavLink to='/orders' className="sidebar-option">
           <img src={assets.order_icon} alt="" />
           <p>Orders</p>
         </NavLink>
         <NavLink to='/reservations ' className="sidebar-option">
           <img src={assets.order_icon} alt="" />
           <p>Reservations</p>
+        </NavLink>
+        <NavLink to='/feedback ' className="sidebar-option">
+          <img src={assets.feedback} alt="" />
+          <p>Feedbacks</p>
         </NavLink>
       </div>
 

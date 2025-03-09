@@ -31,7 +31,7 @@ const List = ({url,setUpdatePopUp,setData}) => {
 
   return (
     <div className='list add flex-col' >
-      <p>All Food List</p>
+      <h2 style={{color:"black"}}>All Food List</h2>
       <div className="list-table">
         <div className="list-table-format title">
           <b>Image</b>
@@ -42,13 +42,14 @@ const List = ({url,setUpdatePopUp,setData}) => {
           <b>Deactive</b>
           <b>Edit</b>
         </div>  
+        <div className='list-cat'>
         {list.map((item,index)=>{
           const cnt = cat.find(obj => obj._id == item.category)
           return(
             
             <div key={index} className={item.status?"list-table-format" : "list-table-format deactive"}>
               <img src={`${url}/images/`+item.image} alt="" />
-              {console.log(cnt)}
+            {/* {console.log(cnt)} */}
               <p>{item.name}</p>
               <p>{cnt.name}</p>
               <p>₹ {item.price}</p>
@@ -59,6 +60,7 @@ const List = ({url,setUpdatePopUp,setData}) => {
           )
         
         })}
+        </div>
       </div>     
     </div>
   )

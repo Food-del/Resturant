@@ -11,6 +11,45 @@
     /* margin: 0px -150px -100px -150px ;  */
 }
 
+
+.Conform-box-active{
+    position: fixed;   
+    top: 33%;          
+    left: 35%;
+    background-color:white;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;     
+    align-items: center;
+    justify-content: center; 
+    border-radius: 10px;
+    font-size: 25px;
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.5);
+}
+
+.Conform-box-deactive{
+   display: none;
+
+}
+
+.buttons{
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.Conform-box-active button{
+    width: 100px;
+    padding: 10px;
+    font-size: 15px;
+    background-color: tomato;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+
 .res-header{
  
     margin-bottom: 10px;
@@ -62,8 +101,8 @@
 }
 
 .btn{
-    margin-left: 295px;
-    width:100px;
+    margin-left: 255px;
+    width:200px;
     height: 40px;
     color: white;
     font-size: 18px;
@@ -76,4 +115,6 @@
 
 .info-text{
     text-align: left;
+    color: red;
+    margin-bottom: 25px;
 }

@@ -6,7 +6,6 @@ import { assets } from '../../assets/assets';
 
 const Orders = ({ url }) => {
   const [orders, setOrders] = useState([]);
-
   const fetchAllOrders = async () => {
     try {
       const response = await axios.get(url + "/api/order/lista");
@@ -41,14 +40,14 @@ const Orders = ({ url }) => {
 
   return (
     <div className='order add'>
-      <h3>Order Page</h3>
+      <h3>Orders</h3>
       <div className='order-list'>
         {orders.map((order, index) => {
-          console.log(`Order ${index} item:`, order.item); // Debugging order.item
+          //console.log(`Order ${index} item:`, order.item); // Debugging order.item
 
           return (
             <div key={index} className='order-item'>
-              <img src={assets.parcel_icon} alt="Parcel Icon" />
+              <img src={assets.foodpackage} alt="Parcel Icon" />
               <div>
               <p className='order-item-food'>
                 {order.items.map((item,index)=>{
@@ -60,14 +59,14 @@ const Orders = ({ url }) => {
                   }
                 })}
               </p>
-              <p className="order-item-name">{order.address.firstName+" "+order.address.lastName}</p>
+              <p className="order-item-name"><b>Name:</b><span>{" "+order.address.firstName+" "+order.address.lastName}</span></p>
               <div className="order-item-address">
-                <p>{order.address.street+","+order.address.area+","+order.address.city+","+order.address.zipcode}</p>
+                <p><b>Address:</b>{" "+order.address.street+","+order.address.area+","+order.address.city+","+order.address.zipcode}</p>
               </div>
-              <p className="order-item-phone">{order.address.phone}</p>
+              <p className="order-item-phone"><b>Phone no:</b>{" "+order.address.phone}</p>
               </div>
-              <p>Items: {order.items.length} </p>
-              <p>₹{order.amount} </p>
+              <p><b>Items: </b> {" "+order.items.length} </p>
+              <p className="amount"><b>Amount:</b><span>{" "}₹{order.amount} </span> </p>
               <select onChange={(event)=>statusHandler(event,order._id)} value={order.status}>
                 <option value="Food Processing">Food Processing</option>
                 <option value="Out for delivery">Out for delivery</option>

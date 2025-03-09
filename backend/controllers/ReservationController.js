@@ -21,7 +21,7 @@ const addReservation = async (req,res)=>{
             Payment:false
         })
         await newReservation.save();
-        console.log("suiiiiii");
+       
         
         const line_items = [
             {
@@ -53,30 +53,42 @@ const addReservation = async (req,res)=>{
         console.log(error);
         res.json({success:false,message:"Errorss"})
     }
-    console.log("hii");
+
 
 }
 
 const verifiReservation = async(req,res) =>{
     const {reservationId,success} = req.body;
-    console.log(req.body);
-    console.log("hii");
+   
+    
 
     try {
         if(success=="true"){
-            await ReservationModel.findByIdAndUpdate(reservationId,{payment:true});
+            await ReservationModel.findByIdAndUpdate(reservationId,{Payment:true});
             res.json({success:true,message:"Paid"})
         }
         else{
             await ReservationModel.findByIdAndUpdate(reservationId,{payment:false});
             res.json({success:false,message:"Not paid"})
+            console.log("false")
         }
     } catch (error) {
         console.log(error);
         res.json({success:false,message:"Error"})
     }
-    console.log("hello");
+ 
 
 }
 
-export {addReservation,verifiReservation}
+const FetchReservs = async (req,res)=>{
+    try {
+        const reservs = await ReservationModel.find({})
+        res.json({success:true,data:reservs})
+    } catch (error) {
+        res.json({success:false,message:"Error"})
+    }
+   
+}
+
+
+export {addReservation,verifiReservation,FetchReservs}

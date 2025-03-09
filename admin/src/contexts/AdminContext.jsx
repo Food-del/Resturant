@@ -52,7 +52,7 @@ const AdminContextProvider = (props)=>{
     // // Debugging output
     // console.log("Categories:", categories);
     // console.log("Dishes:", dishes);
-    console.log("Category-wise Dish Count:", catDishCount);
+    // console.log("Category-wise Dish Count:", catDishCount);
 
         // Only update state if request was successful
         if (catResponse.data.success) {
