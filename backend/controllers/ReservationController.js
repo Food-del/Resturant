@@ -90,5 +90,17 @@ const FetchReservs = async (req,res)=>{
    
 }
 
+//fetch user's reservation in user page
 
-export {addReservation,verifiReservation,FetchReservs}
+const userReservation = async(req,res)=>{
+    try {
+        const Reservations = await ReservationModel.find({userId:req.body.userId})
+        res.json({success:true,data:Reservations})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Can't fetch reservations"})
+    }
+}
+
+
+export {addReservation,verifiReservation,FetchReservs,userReservation}

@@ -31,14 +31,18 @@ const createToken = (id) => {
     return jwt.sign({id},process.env.JWT_SECRET)
 }
 
-
-
-
-
-
-
-
-
+const userInfo = async (req, res) => {
+    try {
+        const userData = await userModel.findById(req.userId).select("-password"); // Correct usage
+        if (!userData) {
+            return res.json({ success: false, message: "User not found" });
+        }
+        res.json({ success: true, data: userData });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, message: "Can't fetch user's data" });
+    }
+};
 
 
 
@@ -82,4 +86,4 @@ const registerUser = async (req,res) => {
     }
 }
 
-export{loginUser,registerUser};
+export{loginUser,registerUser,userInfo};

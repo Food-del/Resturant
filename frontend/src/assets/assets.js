@@ -4,6 +4,8 @@ import logos from './logos.png'
 import logoes from './logos-removebg-preview.png'
 import header_img from './header_img.png'
 import search_icon from './search_icon.png'
+import table_icon from './table_icon.png'
+
 import menu_1 from './menu_1.png'
 import menu_2 from './menu_2.png'
 import menu_3 from './menu_3.png'
@@ -69,6 +71,7 @@ import res_drop from './reservation_drop.png'
 export const assets = {
     logo,
     logos,
+    table_icon,
     logoes,
     basket_icon,
     header_img,
