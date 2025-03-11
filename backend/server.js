@@ -9,6 +9,7 @@ import cartRouter from "./routes/cartRoute.js"
 import orderRouter from "./routes/orderRoute.js"
 import fedRouter from "./routes/feedbackRoute.js"
 import ReservationRouter from "./routes/ReservationRoute.js"
+import areaRouter from "./routes/areaRouter.js"
 
 
 //app config
@@ -39,6 +40,7 @@ app.use("/api/cart",cartRouter)
 app.use("/api/order",orderRouter)
 app.use("/api/contact",fedRouter)
 app.use("/api/reservation",ReservationRouter)
+app.use("/api/area",areaRouter)
 
 
 

@@ -9,6 +9,20 @@
 .place-order-left{
     width: 100%;
     max-width:max(30%,500px);
+
+}
+.box-fields-hide{
+    display: none;
+}
+.box-fields{
+    display: flex;
+    gap:5px;
+    font-weight: 500;
+    color: green;
+}
+.place-order-left .box-fields .box{
+width: 5%;
+margin-top: 5px;
 }
 
 .place-order-left .title{
@@ -17,7 +31,7 @@
     margin-bottom: 50px;
 }
 
-.place-order-left input{
+.place-order-left input,select{
     margin-bottom: 15px;
     width: 100%;
     padding: 10px;

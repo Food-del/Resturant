@@ -15,6 +15,7 @@ import MyProfile from './pages/MyProfile/MyProfile'
 import ContactUs from './pages/ContactUs/ContactUs'
 import { ToastContainer } from 'react-toastify'
 import Verifi from './pages/Verifi/Verifi'
+import Reviews from './pages/Reviews/Reviews'
 
 const App = () => {
 
@@ -37,6 +38,7 @@ const App = () => {
           <Route path='/myprofile' element={<MyProfile/>} />
           <Route path='/contactus' element={<ContactUs/>}/>
           <Route path='/verifi' element={<Verifi/>}></Route>
+          <Route path='/reviews' element={<Reviews/>}></Route>
         </Routes>
       </div>
       <Footer />

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState ,useEffect} from 'react'
 import './Navbar.css'
 import {assets} from '../../assets/assets'
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -7,14 +7,21 @@ import { StoreContext } from '../../Context/StoreContext';
 const Navbar = ({setShowLogin}) => {
 
   const [menu,setMenu] = useState("Home");
-  const {getTotalCartAmount,token,setToken,setIsLogged} =useContext(StoreContext)
+  const {getTotalCartAmount,token,setToken,isLogged,setIsLogged} =useContext(StoreContext)
   const navigate = useNavigate()
+
+ useEffect(() => {
+    localStorage.setItem("isLogged", isLogged);
+    console.log(isLogged)
+  }, [isLogged])
 
   const logout = () =>{
     localStorage.removeItem("token");
     setToken("");
     navigate("/")
     setIsLogged(false)
+    localStorage.setItem("isLogged",{});
+    
   }
 
   return (
@@ -24,10 +31,10 @@ const Navbar = ({setShowLogin}) => {
         <li onClick={()=>setMenu("Home")} className={menu==="Home"?"active":""}><NavLink to="/">HOME</NavLink></li>
         <li onClick={()=>setMenu("Menu")} className={menu==="Menu"?"active":""}><NavLink to="/menu">MENU</NavLink></li>
         <li onClick={()=>setMenu("Reservation")} className={menu==="Reservation"?"active":""}><NavLink to="/reservation">RESERVATION</NavLink></li>
+        <li onClick={()=>setMenu("Reviews")} className={menu==="Reviews"?"active":""}><NavLink to="/reviews">REVIEWS</NavLink></li>
         <li onClick={()=>setMenu("Contact-us")} className={menu==="Contact-us"?"active":""}><NavLink to="/contactus">CONTACT US</NavLink></li>
       </ul>
       <div className="navbar-right">
-        <img  src={assets.search_icon} alt="" />
         <div className="navbar-search-icon">
           <Link to='/cart'onClick={()=>setMenu("Cart")} className={menu==="Cart"?"active":""}><img src={assets.bag_icon} alt="" /></Link>
           <div className={getTotalCartAmount()===0?"":"dot"}></div>

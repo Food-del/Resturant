@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './LoginPopup.css';
 import { assets } from '../../assets/assets';
 import { StoreContext } from '../../Context/StoreContext';
@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Eye, EyeOff } from 'lucide-react';
 
 const LoginPopup = ({ setShowLogin }) => {
-  const { url, setToken,setUser ,setIsLogged} = useContext(StoreContext);
+  const { url, setToken,setUser ,setIsLogged,isLogged,user} = useContext(StoreContext);
 
   const [currState, setCurrState] = useState('Login');
   const [data, setData] = useState({
@@ -18,6 +18,14 @@ const LoginPopup = ({ setShowLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [notification, setNotification] = useState(null); 
   const [formVisible, setFormVisible] = useState(true); 
+
+
+  useEffect(() => {
+    localStorage.setItem("isLogged", isLogged);
+    localStorage.setItem("User", JSON.stringify(user));
+  }, [isLogged])
+  
+
 
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });

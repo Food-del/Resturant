@@ -44,7 +44,22 @@ const userInfo = async (req, res) => {
     }
 };
 
+//add address and other info in usermodel
+const addUserInfo=async(req,res)=>{
+    try {
+        const{id,street,area,phone} = req.body
+        const response = await userModel.findByIdAndUpdate(id,{
+            phoneNo:phone,
+            address:street,
+            areaId:area
+    })
+    res.json({success:true,message:"Succefully Updated"})
+    } catch (error) {
+        console.log(error)
+        res.json({success:false,message:"Error"})
+    }
 
+}
 
 //register user 
 const registerUser = async (req,res) => {
@@ -86,4 +101,4 @@ const registerUser = async (req,res) => {
     }
 }
 
-export{loginUser,registerUser,userInfo};
+export{loginUser,registerUser,userInfo,addUserInfo};

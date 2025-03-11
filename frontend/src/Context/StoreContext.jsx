@@ -10,8 +10,16 @@ const StoredContextProvider = (props) => {
     const [categoryList,setCategoryList] =useState([]);
     const [token,setToken] = useState("")
     const [food_list,setFoodList] = useState([])
-    const [user,setUser]= useState({})
-    const [isLogged,setIsLogged]=useState(false)
+    const [user,setUser]= useState(() => {
+        try {
+            const storedUser = localStorage.getItem("User");
+            return storedUser ? JSON.parse(storedUser) : {}; 
+        } catch (error) {
+            console.error("Error parsing User from localStorage", error);
+            return {};
+        }
+    });
+    const [isLogged,setIsLogged]=useState(localStorage.getItem("isLogged")|| false)
 
     const addToCart = async (itemId) => {
         if(!cartItems[itemId]){

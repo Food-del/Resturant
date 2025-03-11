@@ -22,7 +22,7 @@ const App = () => {
     <div>
       <ToastContainer/>
       <Navbar/>
-      <hr />
+      
       <div className="app-content">
         <Sidebar/>
         {updatePopUp?<UpdatePopUp setUpdatePopUp={setUpdatePopUp} item={data} url={url}/>:<></> }

@@ -30,7 +30,7 @@ const MyOrders = () => {
         <div className="container">
             {data.map((order,index)=>{
                 return(
-                    <div Key={index} className="my-orders-order">
+                    <div key={index} className="my-orders-order">
                         <img src={assets.parcel_icon} alt='png imgae'/>
                         <p>
                             {order.items.map((item,index)=>{

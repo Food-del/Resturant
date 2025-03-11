@@ -6,6 +6,21 @@ import { assets } from '../../assets/assets';
 
 const Orders = ({ url }) => {
   const [orders, setOrders] = useState([]);
+  const[area,setArea]=useState([])
+  const fetchArea= async()=>{
+    try {
+      const response= await axios.get(url+"/api/area/arealist")
+       if (response.data.success) {
+            setArea(response.data.data);
+          } else {
+            console.log(response.data.message)
+          }
+    } catch (error) {
+      console.log(error)
+    }  
+  }
+
+
   const fetchAllOrders = async () => {
     try {
       const response = await axios.get(url + "/api/order/lista");
@@ -36,6 +51,7 @@ const Orders = ({ url }) => {
 
   useEffect(() => {
     fetchAllOrders();
+    fetchArea()
   }, [url]); 
 
   return (
@@ -44,7 +60,8 @@ const Orders = ({ url }) => {
       <div className='order-list'>
         {orders.map((order, index) => {
           //console.log(`Order ${index} item:`, order.item); // Debugging order.item
-
+           const userarea=area.find(obj=> obj._id===order.address.area)
+         
           return (
             <div key={index} className='order-item'>
               <img src={assets.foodpackage} alt="Parcel Icon" />
@@ -59,9 +76,9 @@ const Orders = ({ url }) => {
                   }
                 })}
               </p>
-              <p className="order-item-name"><b>Name:</b><span>{" "+order.address.firstName+" "+order.address.lastName}</span></p>
+              <p className="order-item-name"><b>Name:</b><span>{" "+order.address.name}</span></p>
               <div className="order-item-address">
-                <p><b>Address:</b>{" "+order.address.street+","+order.address.area+","+order.address.city+","+order.address.zipcode}</p>
+                <p><b>Address:</b>{" "+order.address.street+","+userarea?.area+","+order.address.city+","+order.address.zipcode}</p>
               </div>
               <p className="order-item-phone"><b>Phone no:</b>{" "+order.address.phone}</p>
               </div>

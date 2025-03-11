@@ -6,6 +6,7 @@ import { StoreContext } from '../../Context/StoreContext'
 import axios from 'axios'
 const ContactUs = () => {
     const{user,isLogged,url}=useContext(StoreContext)
+
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const[ispublic,setIsPublic]= useState(true)
@@ -25,6 +26,7 @@ const onChangeHandler = (event) => {
 
 const onSubmmitHandler = async (e)=>{
   if(isLogged){
+   
   e.preventDefault()
   data.isPublic=ispublic
   data.userId=user._id
@@ -49,9 +51,9 @@ const onSubmmitHandler = async (e)=>{
 
 useEffect(() => {
   if (isLogged) {
-     
     setUsername(user.name || ""); 
     setEmail(user.email || "");
+    console.log(user.name)
   }else{
       
   }
@@ -61,7 +63,7 @@ useEffect(() => {
   return (
     <div className='fed-outer-container'>
         <h1 className='feed-h1'>Give us your valueble feedback</h1>
-    <form onSubmit={ isLogged ? onSubmmitHandler : (e)=>{e.preventDefault();toast.error("You Need To Login")} }>
+    <form onSubmit={ isLogged ?onSubmmitHandler : (e)=>{e.preventDefault();toast.error("You Need To Login")} }>
         <div className='fed-inner-container'>
         <div className='fed-filed'>
       <label htmlFor="username">Username:</label>
