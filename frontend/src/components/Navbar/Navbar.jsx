@@ -7,7 +7,7 @@ import { StoreContext } from '../../Context/StoreContext';
 const Navbar = ({setShowLogin}) => {
 
   const [menu,setMenu] = useState("Home");
-  const {getTotalCartAmount,token,setToken,isLogged,setIsLogged} =useContext(StoreContext)
+  const {getTotalCartAmount,token,setToken,isLogged,setIsLogged,setUser} =useContext(StoreContext)
   const navigate = useNavigate()
 
  useEffect(() => {
@@ -21,7 +21,7 @@ const Navbar = ({setShowLogin}) => {
     navigate("/")
     setIsLogged(false)
     localStorage.setItem("isLogged",{});
-    
+    setUser({})
   }
 
   return (

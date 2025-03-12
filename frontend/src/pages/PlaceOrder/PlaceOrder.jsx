@@ -36,10 +36,10 @@ const onChangeHandler = (event) => {
   const placeOrder = async (event) =>{
     event.preventDefault();
     let res={}
-    if(!defaults){
+    if(!user.areaId){
      res = await axios.post(url+"/api/user/adduserinfo",data);
     }
-    if(defaults == true||res.data.success ){
+    if(user.areaId||res.data.success ){
       let orderItems = [];
       food_list.map((item)=>{
         if(cartItems[item._id] > 0){
@@ -125,7 +125,7 @@ const onChangeHandler = (event) => {
           area: selectedAreaId, // Set selected area
           zipcode: selectedArea ? selectedArea.pincode : "", // Auto-update pincode
           });
-        }} name="Area" value={defaults?defaultarea?.area:data.area} required>
+        }} name="Area" value={defaults?defaultarea?._id:data.area} required>
               <option value="" disabled selected>
                 Select Area
               </option>
