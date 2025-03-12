@@ -8,6 +8,8 @@ const loginUser = async (req,res) => {
     const {email,password} = req.body;
     try {
         const user = await userModel.findOne({email});
+        
+        
         if(!user){
             return res.json({success:false,message:"User Doesn't Exist"});
         }
@@ -16,7 +18,9 @@ const loginUser = async (req,res) => {
         if(!isMatch){
             return res.json({success:false,message:"Invalid Credintials"});
         }
-         
+        // const area = await AreaModel.findById(user.areaId);
+        // console.log("hello",user);
+        // console.log(area);
         const token=createToken(user._id);
         res.json({success:true,token,user})
 
@@ -34,6 +38,7 @@ const createToken = (id) => {
 const userInfo = async (req, res) => {
     try {
         const userData = await userModel.findById(req.userId).select("-password"); // Correct usage
+        
         if (!userData) {
             return res.json({ success: false, message: "User not found" });
         }
@@ -41,6 +46,93 @@ const userInfo = async (req, res) => {
     } catch (error) {
         console.log(error);
         res.json({ success: false, message: "Can't fetch user's data" });
+    }
+};
+
+// const changePassword = async (req,res) => {
+//     const {oldPassword,newPassword} = req.body;
+//     console.log("id:" ,req.userId);
+    
+//     try {
+//         const user = await userModel.findById(req.userId);
+//         const isMatch =await bcrypt.compare(oldPassword,user.password)
+//         if(!isMatch){
+//             return res.json({success:false,message:"Invalid Credintials"});
+//         }
+//         const salt = await bcrypt.genSalt(10);
+//         const hashPassword = await bcrypt.hash(newPassword,salt);
+//         const response = await userModel.findByIdAndUpdate(req.userId,{password:hashPassword})
+//         res.json({success:true,message:"Succefully Updated"})
+
+//     } catch (error) {
+//         console.log(error)
+//         res.json({success:false,message:"Error"})
+//     }
+// }
+
+
+const changePassword = async (req, res) => {
+    try {
+        const { oldPassword, newPassword,id } = req.body;
+        // console.log("id:" ,id);
+        // console.log("id:" ,req.userId);
+        // console.log("id:" ,req.body.userId);
+        // console.log("oldPassword:" ,oldPassword);
+        // console.log("newPassword:" ,newPassword);
+        // console.log("id:" ,req.body.id);
+        // console.log("id:" ,req.body);
+        const userId = id || req.userId; // Use ID from body or JWT
+        
+        console.log("User ID:", userId);
+        // console.log("User ID from token:", req.userId); // Debugging
+        // console.log(oldPassword, newPassword); // Debugging
+        
+        // console.log("User ID from request:", req.body.userId); // Debugging
+
+        // Check if userId exists
+        // if (!req.userId) {
+        //     return res.json({ success: false, message: "Unauthorized request" });
+        // }
+        // console.log(userId);
+        // console.log(req.body.userId);
+        // const har = req.body.user;
+        // console.log(req.body.user);
+        const user = await userModel.findById(id);
+        console.log(user);
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        if (!user.password) {
+            return res.json({ success: false, message: "Password not set for this user" });
+        }
+
+        // Compare old password
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) {
+            return res.json({ success: false, message: "Invalid credentials" });
+        }
+
+        // Hash new password
+        const salt = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update password in the database
+        const response = await userModel.findByIdAndUpdate(
+            req.userId,
+            { password: hashPassword },
+            { new: true } // Ensure it returns updated document
+        );
+
+        if (!response) {
+            return res.json({ success: false, message: "Failed to update password" });
+        }
+
+        res.json({ success: true, message: "Successfully updated password" });
+
+    } catch (error) {
+        console.error("Error in changePassword:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
 
@@ -101,4 +193,4 @@ const registerUser = async (req,res) => {
     }
 }
 
-export{loginUser,registerUser,userInfo,addUserInfo};
+export{loginUser,registerUser,userInfo,addUserInfo,changePassword};

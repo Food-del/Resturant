@@ -54,7 +54,7 @@ const LoginPopup = ({ setShowLogin }) => {
 
   const onLogin = async (event) => {
     event.preventDefault();
-
+  
     if (currState === 'Sign Up') {
       const strongPasswordRegex =
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -70,25 +70,29 @@ const LoginPopup = ({ setShowLogin }) => {
         return;
       }
     }
-
+  
     let newUrl = url;
     if (currState === 'Login') {
       newUrl += '/api/user/login';
     } else {
       newUrl += '/api/user/register';
     }
-
+  
     try {
       const response = await axios.post(newUrl, data);
       if (response.data.success) {
-        setToken(response.data.token);
-        localStorage.setItem('token', response.data.token);
-        showNotification('Login successful!', 'success');
-        setIsLogged(true)
-        setUser(response.data.user)
-        setFormVisible(false); 
-
-
+        if (currState === 'Login') {
+          setToken(response.data.token);
+          localStorage.setItem('token', response.data.token);
+          setIsLogged(true);
+          setUser(response.data.user);
+          showNotification('Login successful!', 'success');
+          setFormVisible(false);
+        } else {
+          showNotification('Account created successfully! Please login.', 'success');
+          setCurrState('Login'); // Switch to Login form
+          setData({ name: '', email: '', password: '', confirmPassword: '' }); // Reset form data
+        }
       } else {
         showNotification(response.data.message, 'error');
       }
@@ -97,6 +101,7 @@ const LoginPopup = ({ setShowLogin }) => {
       showNotification('An error occurred. Please try again.', 'error');
     }
   };
+  
 
   return (
     <div className="login-popup">
