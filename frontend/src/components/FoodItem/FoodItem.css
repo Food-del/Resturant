@@ -13,6 +13,9 @@
    
 }
 
+.deactive{
+    opacity: 0.5;
+}
 .food-item-price{
     color: tomato;
     font-size: 22px;

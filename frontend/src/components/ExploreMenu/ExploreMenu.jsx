@@ -12,13 +12,13 @@ const ExploreMenu = ({category,setCategory}) => {
       <div className="explore-menu-list">
         
         {categoryList.map((item,index)=>{
-          if(item.status == true){
+      
           return (
-            <div onClick={()=>setCategory(prev=>prev===item._id?"All":item._id)} key={index} className='explore-menu-list-item'>
+            <div onClick={item.status===true?()=>setCategory(prev=>prev===item._id?"All":item._id):null} key={index} className={item.status===true?'explore-menu-list-item':"explore-menu-list-item deactive"}  >
               <img className={category.toString()===item._id.toString()?"active":""} src={"http://localhost:4000/images/"+item.image} alt='menu-item' />
               <p>{item.name}</p>
             </div>
-          )}
+          )
         })}
       </div>
       <hr />

@@ -37,7 +37,15 @@
     color: rgb(66, 47, 47);
 }
 
-
+.list-items select{
+    background-color: #ffe8e4;
+    border: 1px solid tomato;
+    border-radius: 5px;
+    width: max(8vw,130px);
+    align-self: center;
+    padding: 10px 5px;
+    outline: none;
+}
 @media (max-width:1000px){
     .res-list-container{
         font-size: 12px;
