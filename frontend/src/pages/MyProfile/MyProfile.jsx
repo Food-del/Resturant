@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // import { useContext, useState, useEffect } from "react";
 // import { StoreContext } from '../../Context/StoreContext';
 // import './MyProfile.css';
@@ -164,19 +163,12 @@
 
 // export default MyProfile;
 
-=======
->>>>>>> 7e1ea9e3041b7cbf4d2542af4011403af50323a7
 import { useContext, useState, useEffect } from "react";
 import { StoreContext } from '../../Context/StoreContext';
 import './MyProfile.css';
 import axios from 'axios';
-<<<<<<< HEAD
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-=======
-import {toast} from 'react-toastify'
-import { User } from "lucide-react";
->>>>>>> 7e1ea9e3041b7cbf4d2542af4011403af50323a7
 
 const MyProfile = () => {
     const { user, token, url } = useContext(StoreContext);
@@ -192,19 +184,11 @@ const MyProfile = () => {
     });
 
     useEffect(() => {
-<<<<<<< HEAD
         if (user?._id) {
             setData((prev) => ({ ...prev, id: user._id }));
         }
     }, [user]);
 
-=======
-      if (user?._id) {
-          setData((prev) => ({ ...prev, id: user._id }));
-      }
-  }, [user]);
-  
->>>>>>> 7e1ea9e3041b7cbf4d2542af4011403af50323a7
     const onChangeHandler = (event) => {
         const { name, value } = event.target;
         setData((prevData) => ({ ...prevData, [name]: value }));
@@ -226,11 +210,7 @@ const MyProfile = () => {
                 setSuccess("Password changed successfully!");
                 setError("");
                 setShowPasswordForm(false);
-<<<<<<< HEAD
                 toast.success("Password changed successfully!");
-=======
-                toast.success("Successfully Change")
->>>>>>> 7e1ea9e3041b7cbf4d2542af4011403af50323a7
             } else {
                 setError(response.data.message || "Failed to change password.");
                 toast.error(response.data.message || "Failed to change password.");
