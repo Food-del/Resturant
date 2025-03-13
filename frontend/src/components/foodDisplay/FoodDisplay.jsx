@@ -29,14 +29,23 @@ import FoodItem from '../FoodItem/FoodItem';
 
 const FoodDisplay = ({ category = "All" }) => {
     const { food_list,categoryList} = useContext(StoreContext);
+    const updatedFoodList = food_list.map(item => {
+        const categoryData = categoryList.find(cat => cat._id === item.category);
+        // If the category's status is false, set the food item's status to false
+        return {
+            ...item,
+            status: item.status && categoryData?.status, // Ensure both item and category are active
+        };
+    });
+    const sortedFoodList = [...updatedFoodList].sort((a, b) => b.status - a.status);
     return (
         <div className='food-display' id='food-display'>
             <h2>Top Dishes</h2>
             <div className="food-display-list">
-                {food_list.map((item, index) => {
+                {sortedFoodList.map((item, index) => {
                     const cnt = categoryList.find(obg=>obg._id===item.category)
-                   
-                    if((category === "All" && item.status===true && cnt.status===true) || (category === item.category && item.status === true && cnt.status===true)){
+                 
+                    if((category === "All") || (category === item.category)){
                         return (<FoodItem
                             key={index}
                             id={item._id}
@@ -44,6 +53,7 @@ const FoodDisplay = ({ category = "All" }) => {
                             description={item.description}
                             price={item.price}
                             image={item.image}
+                            status={item.status}
                         />
                     )}
                     else{

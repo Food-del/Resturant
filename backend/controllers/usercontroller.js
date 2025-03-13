@@ -119,7 +119,7 @@ const changePassword = async (req, res) => {
 
         // Update password in the database
         const response = await userModel.findByIdAndUpdate(
-            req.userId,
+            id,
             { password: hashPassword },
             { new: true } // Ensure it returns updated document
         );

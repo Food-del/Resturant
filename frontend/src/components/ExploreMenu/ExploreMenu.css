@@ -60,6 +60,10 @@
     padding: 2px;
 }
 
+.deactive{
+    opacity: 0.5;
+}
+
 @media (max-width:1050) {
   .explore-menu-text{
     max-width: 100%; 

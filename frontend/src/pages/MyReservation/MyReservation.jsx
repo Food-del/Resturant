@@ -25,7 +25,21 @@ const MyReservation = () => {
     return date.toLocaleDateString("en-GB").split("/").join("-"); // Converts to "dd-mm-yyyy"
   };
   
-
+  const cancelOrder=async(status,id)=>{
+    try {
+      const response = await axios.post(url+"/api/reservation/status",{
+        id,
+        status:status
+      })
+      if(response.data.success){
+        fetchReservation()
+        console.log("cancelled")
+      }
+    } catch (error) {
+      
+    }
+   
+  }
   // const navigate = useNavigate();
   useEffect(()=>{
     if(token){
@@ -50,7 +64,7 @@ const MyReservation = () => {
               <p>{formatDate(reservation.Date)}</p>
               <p>₹ {reservation.Amount}</p>
               <p><span>&#x25cf;</span><b> {reservation.Status}</b></p>
-              <button>Cancel Reservation</button>
+              <button onClick={(event)=>cancelOrder("Cancelled",reservation._id)}>Cancel Reservation</button>
             </div>
         )
         })}

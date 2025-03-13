@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY2)
 
 const addReservation = async (req,res)=>{
 
-    const frontend_url = "http://localhost:5173"
+    const frontend_url = "http://localhost:5174"
 
     try {
         const newReservation = new ReservationModel({
@@ -102,5 +102,16 @@ const userReservation = async(req,res)=>{
     }
 }
 
+const UpdateStatus = async(req,res)=>{
+   const {id,status} = req.body
+    try {
+        const ressponse = await ReservationModel.findByIdAndUpdate(id,{Status:status})
+        res.json({success:true})
+    } catch (error) {
+        console.log(error);
+        res.json({success:false,message:"Can't Update Status"})
+    }
+}
 
-export {addReservation,verifiReservation,FetchReservs,userReservation}
+
+export {addReservation,verifiReservation,FetchReservs,userReservation,UpdateStatus}

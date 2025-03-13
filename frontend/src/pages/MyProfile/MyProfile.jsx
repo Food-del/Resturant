@@ -1,99 +1,8 @@
-// import { useContext, useState } from "react";
-// import { StoreContext } from '../../Context/StoreContext';
-// import './MyProfile.css';
-
-// const MyProfile = () => {
-//     const { user } = useContext(StoreContext);
-//     const [showPasswordForm, setShowPasswordForm] = useState(false);
-
-//     return (
-//         <div className="profile-container-h">
-//             <div className="profile-header">
-//                 <div className="profile-icon">✔️</div>
-//                 <h2 className="profile-name">{user?.name || "NA"}</h2>
-//             </div>
-
-//             <div className="profile-details">
-//                 <div className="profile-item">
-//                     <i className="fas fa-envelope"></i>
-//                     <div>
-//                         <p className="profile-label">Email</p>
-//                         <p>{user?.email || "NA"}</p>
-//                     </div>
-//                 </div>
-
-//                 <div className="profile-item">
-//                     <i className="fas fa-phone"></i>
-//                     <div>
-//                         <p className="profile-label">Phone</p>
-//                         <p>+91 {user?.phoneNo || " ----- -----"}</p>
-//                     </div>
-//                 </div>
-
-//                 <div className="profile-item">
-//                     <i className="fas fa-map-marker-alt"></i>
-//                     <div>
-//                         <p className="profile-label">City</p>
-//                         <p>{user?.city || "Ahmedabad"}</p>
-//                     </div>
-//                 </div>
-
-//                 <div className="profile-item">
-//                     <i className="fas fa-home"></i>
-//                     <div>
-//                         <p className="profile-label">Address</p>
-//                         <p>{user?.address || " NA"}</p>
-//                     </div>
-//                 </div>
-//             </div>
-
-//             {/* Change Password Section */}
-//             <div className="password-container">
-//                 <div className="password-label">
-//                     <i className="fas fa-key"></i>
-//                     <p>Change Password</p>
-//                 </div>
-//                 <button 
-//                     className="update-password-btn" 
-//                     onClick={() => setShowPasswordForm(!showPasswordForm)}>
-//                     Update Password
-//                 </button>
-//             </div>
-
-//             {/* Password Change Form */}
-//             {showPasswordForm && (
-//                 <div className="password-form">
-//                     <h3>Change Password</h3>
-                    
-//                     <label>Current Password</label>
-//                     <input type="password" placeholder="Enter current password" name="oldPassword" />
-
-//                     <label>New Password</label>
-//                     <input type="password" placeholder="Enter new password" />
-
-//                     <label>Confirm New Password</label>
-//                     <input type="password" placeholder="Confirm new password" />
-
-//                     <div className="password-actions">
-//                         <button className="save-btn">Save Changes</button>
-//                         <button 
-//                             className="cancel-btn" 
-//                             onClick={() => setShowPasswordForm(false)}
-//                         >
-//                             Cancel
-//                         </button>
-//                     </div>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// };
-
-// export default MyProfile;
 import { useContext, useState, useEffect } from "react";
 import { StoreContext } from '../../Context/StoreContext';
 import './MyProfile.css';
 import axios from 'axios';
+import {toast} from 'react-toastify'
 import { User } from "lucide-react";
 
 const MyProfile = () => {
@@ -116,7 +25,6 @@ const MyProfile = () => {
       }
   }, [user]);
   
-    // id: user?._id
     const onChangeHandler = (event) => {
         const { name, value } = event.target;
         setData((prevData) => ({ ...prevData, [name]: value }));
@@ -137,6 +45,7 @@ const MyProfile = () => {
                 setSuccess("Password changed successfully!");
                 setError("");
                 setShowPasswordForm(false);
+                toast.success("Successfully Change")
             } else {
                 setError(response.data.message || "Failed to change password.");
             }

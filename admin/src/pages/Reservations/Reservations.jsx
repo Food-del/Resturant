@@ -5,7 +5,6 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 const Reservations = ({url}) => {
  const[reservs,setReservs] =useState([])
-
   const fetchAllReservation = async ()=>{
     try {
       const response = await axios.get(url + "/api/reservation/reslist");
@@ -21,7 +20,15 @@ const Reservations = ({url}) => {
       toast.error("Can't Fetch Data");
     }
   }
-
+  const statusHandler = async (event,id)=>{
+    const response = await axios.post(url+"/api/reservation/status",{
+      id,
+      status:event.target.value
+    })
+    if(response.data.success){
+      await fetchAllReservation()
+    }
+  }
   useEffect(() => {
     fetchAllReservation();
   }, [])
@@ -35,6 +42,7 @@ const Reservations = ({url}) => {
     <div className="res-outer-container">
       <h2>Reservations</h2>
         {reservs.map((item,index)=>{
+          const onestatus=reservs.find((obj)=>obj._id === item._id)
           if(item.Payment===true){
           const formatedate= new Date(item.Date).toLocaleDateString("en-GB")
           return(
@@ -69,7 +77,11 @@ const Reservations = ({url}) => {
         </div>
         <div className='res-list-col'>
           <div className='list-items'>
-            <b>Status:</b><p className='status'>{item.Status}</p>
+          <select onChange={(event)=>statusHandler(event,item._id)} value={item.Status}>
+                <option value="Pending">Pending</option>
+                <option value="Confirm">Confirm</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
           </div>
         </div>
         </div>
