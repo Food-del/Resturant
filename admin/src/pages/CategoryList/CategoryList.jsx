@@ -5,7 +5,7 @@ import {toast} from 'react-toastify'
 import {assets} from '../../assets/assets.js'
 import { AdminContext } from '../../contexts/AdminContext.jsx'
 
-const CategoryList = ({url}) => {
+const CategoryList = ({url,setCatUpdatePopUp,setData}) => {
   const{focus,setFocus,fetchcatList,catlist,dishCount} =useContext(AdminContext)
   const ActiveDeactiveFood =async(foodId,state) =>{
     const response = await axios.post(`${url}/api/food/removecat`,{id:foodId,status:state});
@@ -49,7 +49,7 @@ const CategoryList = ({url}) => {
                <p>{cnt?.totalDishes}</p>
                <p onClick={()=>ActiveDeactiveFood(item._id,true)}  className="active-mark">&#10003;</p>
                <p onClick={()=>ActiveDeactiveFood(item._id,false)}  className="remove">X</p>
-               <img /*onClick={()=>{setUpdatePopUp(true);setData(item);setFocus}}*/ className='Edit-Img' src={assets.Edit} alt=""/>
+               <img onClick={()=>{setCatUpdatePopUp(true);setData(item);setFocus}} className='Edit-Img' src={assets.Edit} alt=""/>
              </div>
            )
          

@@ -18,7 +18,8 @@ const UpdatePopUp = ({setUpdatePopUp,item,url}) => {
     category: item.category,
     img:image,
   })
- 
+  const baseUrl = "http://localhost:4000";
+  const imageUrl = `${baseUrl}/uploads/${item.image}`;
 
   const fetchCategory = async () => {
     try {
@@ -127,7 +128,7 @@ const onSubmitHandler = async (event) => {
             <div className="update-img-uplode flex-col">
               <p>Uplode Image</p>
               <label htmlFor="image">
-                <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
+                <img src={image ? URL.createObjectURL(image) :imageUrl} alt="" />
                 
               </label>
               <input onChange={(e) => setImage(e.target.files[0])} type="file" accept=".jpg" id="image" hidden/>

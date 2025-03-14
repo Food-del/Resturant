@@ -12,9 +12,12 @@ import UpdatePopUp from './components/UpdatePopUp/UpdatePopUp'
 import Reservations from './pages/Reservations/Reservations'
 import CategoryList from './pages/CategoryList/CategoryList'
 import Feedback from './pages/Feedback/Feedback'
+import { CatUpdatePopUp } from './components/CatUpdatePopUp/CatUpdatePopUp'
 const App = () => {
  const [updatePopUp,setUpdatePopUp] =useState(false)
+ const [catUpdatePopUp,setCatUpdatePopUp] =useState(false)
  const [data,setData] =useState({})
+ const [catdata,setCatData] =useState({})
 
  const url ="http://localhost:4000" 
 
@@ -26,11 +29,12 @@ const App = () => {
       <div className="app-content">
         <Sidebar/>
         {updatePopUp?<UpdatePopUp setUpdatePopUp={setUpdatePopUp} item={data} url={url}/>:<></> }
+        {catUpdatePopUp?<CatUpdatePopUp setCatUpdatePopUp={setCatUpdatePopUp} item={catdata} url={url}/>:<></> }
         <Routes>
           <Route path="/add" element={<Add url={url}/>}/>
           <Route path="/addcategory" element={<AddCategory url={url}/>}/>
           <Route path="/list" element={<List url={url} setUpdatePopUp={setUpdatePopUp} setData={setData}/>}/>
-          <Route path="/categorylist" element={<CategoryList url={url}/>}/>
+          <Route path="/categorylist" element={<CategoryList url={url} setCatUpdatePopUp={setCatUpdatePopUp} setData={setCatData}/>}/>
           <Route path="/orders" element={<Orders url={url}/>}/>
           <Route path='/reservations' element={<Reservations url={url}/>} />
           <Route path='/feedback' element={<Feedback url={url}/>} />

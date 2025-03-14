@@ -70,7 +70,7 @@ const Reservation = () => {
   
   return (
     <div>
-    
+  
     <div className="res-container">
       <div className="res-header">
         <div className="booknow-header">

@@ -10,6 +10,11 @@ import orderRouter from "./routes/orderRoute.js"
 import fedRouter from "./routes/feedbackRoute.js"
 import ReservationRouter from "./routes/ReservationRoute.js"
 import areaRouter from "./routes/areaRouter.js"
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 //app config
@@ -41,7 +46,7 @@ app.use("/api/order",orderRouter)
 app.use("/api/contact",fedRouter)
 app.use("/api/reservation",ReservationRouter)
 app.use("/api/area",areaRouter)
-
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); 
 
 
 app.get("/",(req,res)=>{
