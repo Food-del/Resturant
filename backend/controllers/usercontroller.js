@@ -81,9 +81,9 @@ const changePassword = async (req, res) => {
         // console.log("newPassword:" ,newPassword);
         // console.log("id:" ,req.body.id);
         // console.log("id:" ,req.body);
-        const userId = id || req.userId; // Use ID from body or JWT
+        // const userId = id || req.userId; // Use ID from body or JWT
         
-        console.log("User ID:", userId);
+        // console.log("User ID:", id);
         // console.log("User ID from token:", req.userId); // Debugging
         // console.log(oldPassword, newPassword); // Debugging
         
