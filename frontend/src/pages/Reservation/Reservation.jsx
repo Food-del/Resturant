@@ -8,9 +8,25 @@ import axios from 'axios'
 
 const Reservation = () => {
   const{user,isLogged,url,token}=useContext(StoreContext)
+  const [reserves,setReservs]=useState()
   const [minDate, setMinDate] = useState('');
   const [maxDate, setMaxDate] = useState('');
   const [isSubmit ,setIsSubmit] =useState(false)
+  const fetchAllReservation = async ()=>{
+    try {
+      const response = await axios.get(url + "/api/reservation/reslist");
+     // console.log("Full API Response:", response.data); // Debugging API Response
+
+      if (response.data.success) {
+        setReservs(response.data.data);
+      } else {
+        toast.error("Can't Fetch Reservs");
+      }
+    } catch (error) {
+      console.error("Error fetching Reservations:", error);
+      toast.error("Can't Fetch Data");
+    }
+  }
 
   const [data,setData] = useState({
     firstname:"",
@@ -42,7 +58,7 @@ const Reservation = () => {
 
     setMinDate(tomorrow.toISOString().split('T')[0]);
     setMaxDate(oneMonthLater.toISOString().split('T')[0]);
-    
+    fetchAllReservation();
   
   }, []);
 
@@ -51,6 +67,17 @@ const Reservation = () => {
     //event.preventDefault();
     // console.log(url);
     if (isLogged){
+        // Check if there are already 5 reservations for the selected date & time
+        const existingReservations = reserves.filter((res) => {
+          const resDate = new Date(res.Date).toISOString().split("T")[0]; // Convert to YYYY-MM-DD
+          return resDate === data.date  && res.Time === data.time && res.Payment===true && res.Status=="Booked";
+        });
+        console.log(existingReservations);
+        
+    if (existingReservations.length >= 5) {
+    toast.error("Max limit reached for this date and time slot!");
+    return;
+    }else{
     let response = await axios.post(url+"/api/reservation/reserve",data,{headers:{token}})
     // console.log(response);
     if(response.data.success){
@@ -60,6 +87,7 @@ const Reservation = () => {
     else{
       alert("errrrrrr")
     }
+  }
   }else{
     toast.error("You need to Login")
   }
@@ -81,8 +109,7 @@ const Reservation = () => {
         </div>
       </div>
       <div className="detail-form">
-        <form onSubmit={(e)=>{
-          setIsSubmit(true)
+        <form onSubmit={(e)=>{isLogged?setIsSubmit(true):toast.error("You Need to login First");
           e.preventDefault();}}>
           <div className="detail-row">
             <div className="fields">
@@ -153,7 +180,7 @@ const Reservation = () => {
       
         </form>
         
-        <div className={isSubmit?'Conform-box-active':'Conform-box-deactive'}>
+        <div className={isSubmit?(isLogged?'Conform-box-active':'Conform-box-deactive'):'Conform-box-deactive'}>
         
           <p className="info-text">No refund in case of cancellation.</p>
            <p>Are You Sure?</p>

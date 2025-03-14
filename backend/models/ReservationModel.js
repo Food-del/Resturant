@@ -9,7 +9,7 @@ const ReservationSchema = new mongoose.Schema({
     Date:{type:Date,required:true},
     Amount:{type:Number,required:true},
     Mobile:{type:String,required:true},
-    Status:{type:String,default:"Pending"},
+    Status:{type:String,default:"Booked"},
     Payment:{type:Boolean,default:false}
 })
 

@@ -20,15 +20,15 @@ const Reservations = ({url}) => {
       toast.error("Can't Fetch Data");
     }
   }
-  const statusHandler = async (event,id)=>{
-    const response = await axios.post(url+"/api/reservation/status",{
-      id,
-      status:event.target.value
-    })
-    if(response.data.success){
-      await fetchAllReservation()
-    }
-  }
+  // const statusHandler = async (event,id)=>{
+  //   const response = await axios.post(url+"/api/reservation/status",{
+  //     id,
+  //     status:event.target.value
+  //   })
+  //   if(response.data.success){
+  //     await fetchAllReservation()
+  //   }
+  // }
   useEffect(() => {
     fetchAllReservation();
   }, [])
@@ -77,11 +77,12 @@ const Reservations = ({url}) => {
         </div>
         <div className='res-list-col'>
           <div className='list-items'>
-          <select onChange={(event)=>statusHandler(event,item._id)} value={item.Status}>
+          <b>Status:</b><p className='status'>{item.Status}</p>
+          {/* <select onChange={(event)=>statusHandler(event,item._id)} value={item.Status}>
                 <option value="Pending">Pending</option>
                 <option value="Confirm">Confirm</option>
                 <option value="Cancelled">Cancelled</option>
-              </select>
+              </select> */}
           </div>
         </div>
         </div>
