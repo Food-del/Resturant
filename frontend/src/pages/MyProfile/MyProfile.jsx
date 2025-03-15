@@ -309,7 +309,8 @@ const MyProfile = () => {
 
     const handleUpdateInfo = async (event) => {
         event.preventDefault();  // Now event is properly defined
-    
+        // console.log(userInfo);
+        
         // console.log(userInfo.phoneNo);
     
         if(userInfo.phoneNo==user.phoneNo){

@@ -58,7 +58,7 @@ const updateUserInfo = async (req, res) => {
             name:name,
             phoneNo:phoneNo,
             address:address,
-            areaI:areaId.area}
+            areaId:areaId._id}
         );
         console.log(response);
         
