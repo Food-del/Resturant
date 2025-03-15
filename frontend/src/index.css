@@ -14,8 +14,9 @@ a{
   color: inherit;
 }
 .app{
-  width: 80%;
+  width: 100%;
   margin: auto;
+  background-color: #fffaf9 ;
 }
 
 @keyframes fadeIn{
