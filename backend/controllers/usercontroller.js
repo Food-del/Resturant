@@ -49,6 +49,29 @@ const userInfo = async (req, res) => {
     }
 };
 
+const updateUserInfo = async (req, res) => {
+    try {
+        const { name, phoneNo, address, areaId,id } = req.body;
+        console.log(req.userId);
+        const response = await userModel.findByIdAndUpdate(
+            id,{
+            name:name,
+            phoneNo:phoneNo,
+            address:address,
+            areaI:areaId.area}
+        );
+        console.log(response);
+        
+        if (!response) {
+            return res.json({ success: false, message: "Failed to update user info" });
+        }
+        res.json({ success: true, message: "Successfully updated user info" });
+    } catch (error) {
+        console.error("Error in updateUserInfo:", error);
+        res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 // const changePassword = async (req,res) => {
 //     const {oldPassword,newPassword} = req.body;
 //     console.log("id:" ,req.userId);
@@ -193,4 +216,4 @@ const registerUser = async (req,res) => {
     }
 }
 
-export{loginUser,registerUser,userInfo,addUserInfo,changePassword};
+export{loginUser,registerUser,userInfo,addUserInfo,changePassword,updateUserInfo};
