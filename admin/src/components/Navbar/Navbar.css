@@ -8,7 +8,7 @@
     height: 15%;
     position: sticky; 
     top: 0 ;
-    background-color: white;
+    background-color:  #fffefd;
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
 }

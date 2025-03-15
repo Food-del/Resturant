@@ -29,10 +29,28 @@
     font-size: 24px;
 }
 
+.profile-container-h .update-info-btn{
+    background: transparent;
+    border: 1px solid #FF6347;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.profile-container-h .update-info-btn:hover {
+    background: #FF6347;
+    color: white;
+}
+
+
 /* Profile Details */
 .profile-container-h .profile-details {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive Grid */
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Responsive Grid */
     gap: 15px;
     margin-top: 20px;
 }

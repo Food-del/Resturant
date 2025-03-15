@@ -260,9 +260,29 @@ const MyProfile = () => {
                     <i className="fas fa-home"></i>
                     <div>
                         <p className="profile-label">Address</p>
-                        <p>{user?.address || " NA"}</p>
+                        <p>{user?.address || "NA"}</p>
                     </div>
                 </div>
+                <div className="profile-item">
+                    <i className="fas fa-home"></i>
+                    <div>
+                        <p className="profile-label">Area</p>
+                        <p>{user?.areaId?.area  || "NA"}</p>
+                    </div>
+                </div>
+                <div className="profile-item">
+                    <i className="fas fa-home"></i>
+                    <div>
+                        <p className="profile-label">Pincode</p>
+                        <p>{user?.areaId?.pincode || "NA"}</p>
+                    </div>
+                </div>
+                {/* <div className="profile-item"> */}
+                    {/* <i className="fas fa-home"></i> */}
+                    <div className="update-info-btn-div">
+                        <button className="update-info-btn">Update Information</button>
+                    </div>
+                {/* </div> */}
             </div>
 
             <div className="password-container">

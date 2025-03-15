@@ -14,6 +14,15 @@
 .dishes{
     margin-left:-15px;
 }
+.clist .clist-table-format {
+    background-color:#ffffff ;
+    box-shadow: 1px 1px 6px 1px rgba(0, 0, 0, 0.5);
+  }
+  
+.clist .title{
+    background-color: #d9d5d5;
+}
+
 
 .clist-table-format .Edit-Img{
     margin-left: 10px;
@@ -27,10 +36,7 @@
    opacity: 50%;
 }
 
-.clist-table-format.title{
-  background-color:#f9f9f9 ;
-  box-shadow: none;
-}
+
 
 .clist-table-format img{
     width: 50px;

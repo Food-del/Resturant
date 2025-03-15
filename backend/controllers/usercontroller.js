@@ -7,7 +7,7 @@ import validator from 'validator'
 const loginUser = async (req,res) => {
     const {email,password} = req.body;
     try {
-        const user = await userModel.findOne({email});
+        const user = await userModel.findOne({email}).populate('areaId');
         
         
         if(!user){
@@ -19,7 +19,7 @@ const loginUser = async (req,res) => {
             return res.json({success:false,message:"Invalid Credintials"});
         }
         // const area = await AreaModel.findById(user.areaId);
-        // console.log("hello",user);
+        // console.log("hello: ",user);
         // console.log(area);
         const token=createToken(user._id);
         res.json({success:true,token,user})

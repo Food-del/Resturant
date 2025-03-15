@@ -23,8 +23,12 @@
    opacity: 50%;
 }
 
-.list-table-format.title{
-  background-color:#f9f9f9 ;
+.list-table-format {
+    background-color: rgb(255, 255, 255);
+}
+
+.list .title{
+  background-color:#d9d5d5 ;
   box-shadow: none;
 }
 
