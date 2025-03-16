@@ -51,21 +51,61 @@
   
   .left-section {
     background-image: url("left-imgs.jpg");
+    overflow: hidden;
   }
   
   .right-section {
-    background-image: url("reservation_cool_tone_transformed.jpg"); 
+    background-image: url("new table.jpg"); 
+    overflow:hidden;
   }
   
   .content {
+    opacity: 0;  /* Initially invisible */
     position: absolute;
     bottom: 20px;
     left: 20px; 
+    text-shadow: 0 0 5px black; 
     color: white;
-    background: rgba(0, 0, 0, 0.6); 
+    background: rgba(29, 29, 29, 0.133);
+    backdrop-filter: blur(3.5px);
     padding: 10px 15px;
     border-radius: 5px;
-    animation: fadeIn 3s
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out, width 0.3s ease-in-out; 
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none; 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 93%;
+    text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: visible;
+  }
+
+  .right-section:hover .content,.left-section:hover .content{
+    opacity: 1;  /* Make visible */
+    width: 100%;
+    height: 100%;
+    transform: scale(1.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 93%;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: visible;
+    border-radius: 5px;
+    justify-content: center;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    pointer-events: auto;
   }
   
 .split-section h2{

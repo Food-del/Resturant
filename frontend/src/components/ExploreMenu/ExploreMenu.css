@@ -21,6 +21,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 30px;
+    padding: 5px;
     text-align: center;
     margin: 20px 0px;
     overflow-x: scroll;

@@ -62,7 +62,7 @@ useEffect(() => {
 
   return (
     <div className='fed-outer-container'>
-        <h1 className='feed-h1'>Give us your valueble feedback</h1>
+        <h1 className='feed-h1'>GIVE US YOUR VALUEBLE REVIEW</h1>
     <form onSubmit={ isLogged ?onSubmmitHandler : (e)=>{e.preventDefault();toast.error("You Need To Login")} }>
         <div className='fed-inner-container'>
         <div className='fed-filed'>
