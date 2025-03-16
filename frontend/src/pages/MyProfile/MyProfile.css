@@ -306,6 +306,7 @@
     font-size: 14px;
     font-weight: bold;
     color: #555;
+    text-align: left;
 }
 
 .profile-container-h .password-container {
