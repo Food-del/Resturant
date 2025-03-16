@@ -1,6 +1,8 @@
 import userModel from "../models/usermodel.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import bcryptjs from 'bcryptjs'
+import dotenv from 'dotenv'
 import validator from 'validator'
 
 //login user
@@ -17,11 +19,11 @@ const loginUser = async (req,res) => {
         console.log(email);
         console.log(password);
         console.log(user);
-        const salt = await bcrypt.genSalt(10);
-        const hp = await bcrypt.hash(password, salt);
+        const salt = await bcryptjs.genSalt(10);
+        const hp = await bcryptjs.hash(password, salt);
         console.log(hp);
         // const passwordString = String(password);
-        const isMatch =await bcrypt.compare(password,user.password)
+        const isMatch =await bcryptjs.compare(password,user.password)
         if(!isMatch){
             return res.json({success:false,message:"Invalid Credintials"});
         }
@@ -115,14 +117,14 @@ const changePassword = async (req, res) => {
         }
 
         // Compare old password
-        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        const isMatch = await bcryptjs.compare(oldPassword, user.password);
         if (!isMatch) {
             return res.json({ success: false, message: "Invalid credentials" });
         }
 
         // Hash new password
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(newPassword, salt);
+        const salt = await bcryptjs.genSalt(10);
+        const hashPassword = await bcryptjs.hash(newPassword, salt);
 
         // Update password in the database
         const response = await userModel.findByIdAndUpdate(
@@ -180,8 +182,8 @@ const registerUser = async (req,res) => {
         }
 
         //hashing password
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(password,salt);
+        const salt = await bcryptjs.genSalt(10);
+        const hashPassword = await bcryptjs.hash(password,salt);
 
         const newUser = new userModel({
             name:name,
@@ -219,9 +221,9 @@ const resetPassword = async (req, res) => {
         // console.log("User found:", response._id);
 
         // Generate salt
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcryptjs.genSalt(10);
         // Hash the new password
-        const hashPassword = await bcrypt.hash(newPassword, salt);
+        const hashPassword = await bcryptjs.hash(newPassword, salt);
 
         // Update password in the database
         const updatedUser = await userModel.findByIdAndUpdate(
