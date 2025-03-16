@@ -13,7 +13,14 @@ const loginUser = async (req,res) => {
         if(!user){
             return res.json({success:false,message:"User Doesn't Exist"});
         }
-
+        console.log(req.body);
+        console.log(email);
+        console.log(password);
+        console.log(user);
+        const salt = await bcrypt.genSalt(10);
+        const hp = await bcrypt.hash(password, salt);
+        console.log(hp);
+        // const passwordString = String(password);
         const isMatch =await bcrypt.compare(password,user.password)
         if(!isMatch){
             return res.json({success:false,message:"Invalid Credintials"});
@@ -97,29 +104,6 @@ const updateUserInfo = async (req, res) => {
 const changePassword = async (req, res) => {
     try {
         const { oldPassword, newPassword,id } = req.body;
-        // console.log("id:" ,id);
-        // console.log("id:" ,req.userId);
-        // console.log("id:" ,req.body.userId);
-        // console.log("oldPassword:" ,oldPassword);
-        // console.log("newPassword:" ,newPassword);
-        // console.log("id:" ,req.body.id);
-        // console.log("id:" ,req.body);
-        // const userId = id || req.userId; // Use ID from body or JWT
-        
-        // console.log("User ID:", id);
-        // console.log("User ID from token:", req.userId); // Debugging
-        // console.log(oldPassword, newPassword); // Debugging
-        
-        // console.log("User ID from request:", req.body.userId); // Debugging
-
-        // Check if userId exists
-        // if (!req.userId) {
-        //     return res.json({ success: false, message: "Unauthorized request" });
-        // }
-        // console.log(userId);
-        // console.log(req.body.userId);
-        // const har = req.body.user;
-        // console.log(req.body.user);
         const user = await userModel.findById(id);
         console.log(user);
         if (!user) {
@@ -216,4 +200,47 @@ const registerUser = async (req,res) => {
     }
 }
 
-export{loginUser,registerUser,userInfo,addUserInfo,changePassword,updateUserInfo};
+const resetPassword = async (req, res) => {
+    const { email, newPassword } = req.body;
+    // console.log(req.body);
+
+    // if (!email || !newpassword) {
+    //     return res.json({ success: false, message: "Email and password are required" });
+    // }
+    // console.log(email);
+    // console.log(newPassword);
+    try {
+        const response = await userModel.findOne({ email: email });
+
+        if (!response) {
+            return res.json({ success: false, message: "Email not found" });
+        }
+
+        // console.log("User found:", response._id);
+
+        // Generate salt
+        const salt = await bcrypt.genSalt(10);
+        // Hash the new password
+        const hashPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update password in the database
+        const updatedUser = await userModel.findByIdAndUpdate(
+            response._id,
+            { password: hashPassword },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.json({ success: false, message: "Failed to update password" });
+        }
+
+        return res.json({ success: true, message: "Password reset successfully" });
+    } catch (error) {
+        console.error("Error resetting password:", error);
+        return res.json({ success: false, message: "Can't reset password" });
+    }
+};
+
+
+
+export{loginUser,registerUser,userInfo,addUserInfo,changePassword,updateUserInfo,resetPassword};
