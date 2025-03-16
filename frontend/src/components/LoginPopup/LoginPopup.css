@@ -14,7 +14,29 @@
     border-radius: 4px;
     width: 100%;
 }
+.login-popup-container input[name="otp"]  {
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+}
 
+.login-popup-container  input[name="newPassword"]{
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.login-popup-container  input[name="confirmNewPassword"] {
+    outline: none;
+    border: 1px solid #c9c9c9;
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+}
 .login-popup-container{
     place-self: center;
     width: max(23vw,330px);

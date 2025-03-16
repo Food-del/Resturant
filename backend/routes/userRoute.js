@@ -1,5 +1,6 @@
 import express from "express"
-import {changePassword, loginUser,registerUser, userInfo,addUserInfo, updateUserInfo } from "../controllers/usercontroller.js";
+import {changePassword, loginUser,registerUser, userInfo,addUserInfo, updateUserInfo,resetPassword } from "../controllers/usercontroller.js";
+import { sendMail, verifyOtp } from "../controllers/mail.js";
 import authMiddleware from "../middleware/auth.js";
 
 
@@ -11,5 +12,8 @@ userRouter.post("/userdata",userInfo)
 userRouter.post("/adduserinfo",addUserInfo)
 userRouter.post("/change-password", changePassword, authMiddleware);
 userRouter.post("/update-info",updateUserInfo);
+userRouter.post("/forgot-password",sendMail);
+userRouter.post("/verify-otp",verifyOtp);
+userRouter.post("/reset-password",resetPassword);
 
 export default userRouter;
