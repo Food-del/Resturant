@@ -1,5 +1,5 @@
 import nodeMailer from 'nodemailer';
-import userModel from '../models/userModel.js';
+import userModel from '../models/usermodel.js';
 import bcrypt from 'bcrypt';
 
 const transporter = nodeMailer.createTransport({
