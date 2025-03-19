@@ -16,8 +16,8 @@
 
 .Conform-box-active{
     position: fixed;   
-    top: 25%;          
-    left: 20%;
+    top: 30%;          
+    left: 35%;
     background-color:white;
     padding: 50px;
     display: flex;

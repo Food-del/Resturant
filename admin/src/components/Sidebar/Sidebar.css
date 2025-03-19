@@ -16,12 +16,7 @@
   align-self: center;
   position:fixed;
   top:20%;
-  transition: transform 0.3s ease-in-out;
-  z-index: 1000;
-}
 
-.sidebar-options.hide{
-  transform: translateY(-30%);
 }
 
 .sidebar-option:hover{

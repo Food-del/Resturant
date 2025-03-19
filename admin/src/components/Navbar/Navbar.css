@@ -9,15 +9,12 @@
     position: sticky; 
     top: 0 ;
     background-color:  #fffefd;
-    transition: transform 0.3s ease-in-out;
-    z-index: 1000;
+   
 }
 
  
 
-.navbar.hide {
-    transform: translateY(-100%);
-}
+
 .navbar .logo{
     width: max(7%,50px);
 }

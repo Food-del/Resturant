@@ -1,4 +1,5 @@
 import ReservationModel from "../models/ReservationModel.js";
+import userModel from "../models/usermodel.js";
 import Stripe from "stripe"
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY2)
@@ -9,6 +10,25 @@ const addReservation = async (req,res)=>{
     const frontend_url = "http://localhost:5173"
 
     try {
+         const user = await userModel.findById(req.body.userId);
+        
+        
+                let stripeCustomer;
+                if (!user.stripeCustomerId2) {
+                    const customer = await stripe.customers.create({
+                        name: user.name,
+                        email: user.email,
+                    });
+        
+                    stripeCustomer = customer.id;
+        
+                    // Save Stripe Customer ID in user database
+                    await userModel.findByIdAndUpdate(user._id, { stripeCustomerId2: stripeCustomer });
+                } else {
+                    stripeCustomer = user.stripeCustomerId2;
+                }
+        
+
         const newReservation = new ReservationModel({
             userId:req.body.userId,
             First_Name:req.body.firstname,
@@ -38,6 +58,7 @@ const addReservation = async (req,res)=>{
         
         
         const session = await stripe.checkout.sessions.create({
+            customer: stripeCustomer,
             payment_method_types: ["card"],
             line_items: line_items,
             mode: "payment",

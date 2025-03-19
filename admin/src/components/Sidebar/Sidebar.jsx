@@ -4,25 +4,9 @@ import {assets} from "../../assets/assets"
 import { NavLink } from 'react-router-dom'
 
 const Sidebar = () => {
-const [hidden, setHidden] = useState(false);
-  let lastScrollY = window.scrollY;
-
-  useEffect(() => {
-      const handleScroll = () => {
-          if (window.scrollY > lastScrollY) {
-              setHidden(true); // Hide navbar when scrolling down
-          } else {
-              setHidden(false); // Show navbar when scrolling up
-          }
-          lastScrollY = window.scrollY;
-      };
-
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
   return (
     <div className='sidebar'>
-      <div className={`sidebar-options ${hidden ? "hide" : ""}`}>
+      <div className={`sidebar-options`}>
         <NavLink to='/add' className="sidebar-option">
           <img src={assets.add_icon} alt="" />
           <p>Add Dish</p>
@@ -50,6 +34,10 @@ const [hidden, setHidden] = useState(false);
         <NavLink to='/feedback ' className="sidebar-option">
           <img src={assets.feedback} alt="" />
           <p>Feedbacks</p>
+        </NavLink>
+        <NavLink to='/reports ' className="sidebar-option">
+          <img src={assets.feedback} alt="" />
+          <p>Reports</p>
         </NavLink>
       </div>
 

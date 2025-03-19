@@ -10,6 +10,26 @@ const placeOrder = async(req,res)=>{
     const frontend_url = "http://localhost:5173"
 
     try {
+        const user = await userModel.findById(req.body.userId);
+
+
+        let stripeCustomer;
+        if (!user.stripeCustomerId) {
+            const customer = await stripe.customers.create({
+                name: user.name,
+                email: user.email,
+            });
+
+            stripeCustomer = customer.id;
+
+            // Save Stripe Customer ID in user database
+            await userModel.findByIdAndUpdate(user._id, { stripeCustomerId: stripeCustomer });
+        } else {
+            stripeCustomer = user.stripeCustomerId;
+        }
+
+
+
         const newOrder = new orderModel({
             userId:req.body.userId,
             items:req.body.items,
@@ -43,6 +63,8 @@ const placeOrder = async(req,res)=>{
         })
 
         const session = await stripe.checkout.sessions.create({
+            customer: stripeCustomer, 
+            payment_method_types: ["card"],
             line_items:line_items,
             mode:'payment',
             success_url:`${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
