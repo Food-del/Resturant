@@ -3,6 +3,11 @@ import { useState } from 'react'
 import './Report.css'
 import { useEffect } from 'react'
 import axios from 'axios'
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import {assets} from '../../assets/assets.js'
+import autoTable from 'jspdf-autotable';
+
 const Reports = ({url}) => {
   const[showSecList,setShowSecList] =useState(true)
   const[model,setModel]=useState()
@@ -13,9 +18,124 @@ const Reports = ({url}) => {
   const[isDateRequired, setIsDateRequired] = useState(true);
   const[isSubmit,setIsSubmit]= useState(false)
   const[isModelSelct,setIsModelSelect]=useState("")
+  const[isRangeSelct,setIsRangeSelect]=useState("")
+
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+
+  
+  const downloadPDF = () => {
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = pdf.internal.pageSize.width;
+    const pageHeight = pdf.internal.pageSize.height;
+    let pageNumber = 1;
+
+    const formattedModel = capitalizeFirstLetter(isModelSelct.replace("Model", ""));
+    const formattedRange = capitalizeFirstLetter(isRangeSelct);
+    const title = `${formattedModel} Report of ${formattedRange}`;
+
+    // Add title at the center
+    pdf.setFontSize(16);
+    const titleWidth = pdf.getTextWidth(title);
+    pdf.text(title, (pageWidth - titleWidth) / 2, 15);
+
+    // Define table headers based on the selected model
+    let headers = [];
+    let tableData = [];
+
+    switch (isModelSelct) {
+        case "userModel":
+            headers = ["Customer Name", "Email", "Phone No.", "Area", "City"];
+            tableData = data.map(item => [
+                item.name, item.email, item.phoneNo || "N/A" , item.areaId?.area || "N/A", item.city
+            ]);
+            break;
+
+        case "foodModel":
+            headers = ["Dish Name", "Price", "Category", "Status", "Description"];
+            tableData = data.map(item => [
+                item.name, item.price, item.category?.name || "N/A",
+                item.status ? "Available" : "Out of Stock",
+                item.description.length > 15 ? item.description.substring(0, 15) + "..." : item.description
+            ]);
+            break;
+
+        case "ReservationModel":
+            headers = ["Customer Name", "People", "Time", "Date", "Status"];
+            tableData = data.map(item => [
+                `${item.First_Name} ${item.Last_name}`, item.People, item.Time,
+                new Date(item.Date).toLocaleDateString('en-GB'), item.Status
+            ]);
+            break;
+
+        case "orderModel":
+            headers = ["Customer", "Items", "Date", "Amount", "Area"];
+            tableData = data.map(item => [
+                item.address?.name,
+                item.items.map(subItem => `${subItem.name} x (${subItem.quantity})`).join(", "),
+                new Date(item.date).toLocaleDateString('en-GB'),
+                item.amount,
+                item.address?.areaName
+            ]);
+            break;
+
+        case "Payments":
+            headers = ["Customer Name", "Email", "Amount", "Status", "Type"];
+            tableData = data.map(item => [
+                item.user?.name, item.user?.email, item.amount, item.status, item.type
+            ]);
+            break;
+
+        case "FeedbackModel":
+            headers = ["Customer Name", "Date", "Time", "Is Public", "Review"];
+            tableData = data.map(item => [
+                item.userName,
+                new Date(item.feedbackDT).toLocaleDateString('en-GB'),
+                new Date(item.feedbackDT).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }),
+                item.isPublic ? "Yes" : "No",
+                item.feedbackText.length > 15 ? item.feedbackText.substring(0, 15) + "..." : item.feedbackText
+            ]);
+            break;
+
+        default:
+            headers = ["No Data Available"];
+            tableData = [];
+            break;
+    }
+
+    // ✅ Use autoTable properly
+    autoTable(pdf, {
+        head: [headers],
+        body: tableData,
+        startY: 25,
+        theme: "striped",
+        styles: { fontSize: 10, cellPadding: 3 },
+        headStyles: { fillColor: [100, 100, 100], textColor: 255 },
+        margin: { top: 25, bottom: 20 },
+        didDrawPage: () => {
+            pdf.setFontSize(10);
+            pdf.text(`Page ${pageNumber}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+            pageNumber++;
+        }
+    });
+
+    pdf.save(`${title}.pdf`);
+};
+
+
+
+
+
+
+
   const handleSelectModel = (event) => {
-    const selectedValue = event.target.value;
+  const selectedValue = event.target.value;
  
+
+  
 
    if(selectedValue ==="foodModel"){
     setShowSecList(false)
@@ -33,22 +153,22 @@ const Reports = ({url}) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    if (selectedRange === "lastMonth") {
+    if (selectedRange === "Last Month") {
         startDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
         endDate = new Date(today.getFullYear(), today.getMonth(), 0);
         setAll(false)
-    } else if (selectedRange === "ThisMonth") {
+    } else if (selectedRange === "This Month") {
         startDate = new Date(today.getFullYear(), today.getMonth(), 1);
         endDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
         setAll(false)
-    } else if (selectedRange === "ThisWeek") {
+    } else if (selectedRange === "This Week") {
         const firstDayOfWeek = new Date(today);
         firstDayOfWeek.setDate(today.getDate() - today.getDay()); // Get Sunday of the week
         startDate = firstDayOfWeek;
         today.setHours(23, 59, 59, 999); 
         endDate = new Date(today);
         setAll(false)
-    } else if (selectedRange === "today") {
+    } else if (selectedRange === "Today") {
         startDate = new Date(today);
         today.setHours(23, 59, 59, 999); 
         endDate = new Date(today);
@@ -62,7 +182,7 @@ const Reports = ({url}) => {
     }
     setStartDate(startDate)
     setEndDate(endDate)
-    
+    setIsRangeSelect(selectedRange)
    };
 
 
@@ -70,9 +190,9 @@ const Reports = ({url}) => {
 
    e.preventDefault()
     if(model) {
-        //  console.log(model)
-        //  console.log(startingDate)
-        // console.log(endingDate)
+         console.log(model)
+         console.log(startingDate)
+         console.log(endingDate)
             const params = {
             model: model,
             all: all,
@@ -89,7 +209,7 @@ const Reports = ({url}) => {
             setData(res.data.data)
             setIsSubmit(true)
             setIsModelSelect(model)
-            
+        
             }
         } catch (error) {
             console.error("Error fetching reports:", error.response?.data || error.message);
@@ -98,8 +218,9 @@ const Reports = ({url}) => {
     }  
    }
    useEffect(() => {
-  console.log(data)
-   }, [data])
+ // console.log(data)
+  console.log(isRangeSelct)
+   }, [isRangeSelct])
    
 
 
@@ -126,15 +247,19 @@ const Reports = ({url}) => {
                 <label htmlFor="second-list">Date range</label>
                 <select onChange={handleSelectRange} id="second-list" name="second-list"  required={isDateRequired}>
                   <option value="" disabled selected>Select Time</option>
-                  <option value="lastMonth">Last Month</option>
-                  <option value="ThisMonth">This Month</option>
-                  <option value="ThisWeek">This Week</option>
-                  <option value="today">Today</option>
+                  <option value="Last Month">Last Month</option>
+                  <option value="This Month">This Month</option>
+                  <option value="This Week">This Week</option>
+                  <option value="Today">Today</option>
                   <option value="All">All</option>
                  </select>
             </div>
-            <button>Generate</button> 
+            <button type='submit'>Generate</button> 
+            <div className='Downlode'>
+            <button onClick={downloadPDF}><img src={assets.download} alt="downloading-updates"/></button>
+            </div>
         </div>
+
         </form>
 
         {isSubmit?(
@@ -183,7 +308,7 @@ const Reports = ({url}) => {
                           <div key={item.id} className="dataList-user">
                             <p>{item.name}</p>
                             <p>{item.email}</p>
-                            <p>{item.phoneNo}</p>
+                            <p>{item.phoneNo|| "N/A"}</p>
                             <p>{item.areaId?.area || "N/A"}</p>
                             <p>{item.city}</p>
                           </div>

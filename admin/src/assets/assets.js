@@ -10,6 +10,8 @@ import cross_icon from './cross_icon.png'
 import reserv from './dining-table.png'
 import foodpackage from './food-delivery.png'
 import feedback from './talk.png'
+import download from './download.png'
+import report from './Report.png'
 
 export const assets ={
     logo,
@@ -24,6 +26,8 @@ export const assets ={
     reserv,
     foodpackage,
     feedback,
+    download,
+    report,
 }
 
 export const url = 'http://localhost:4000'
