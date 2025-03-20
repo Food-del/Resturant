@@ -1,0 +1,80 @@
+.dashboard-h {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .dashboard-h   .sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+  }
+  
+  .dashboard-h .sidebar h2 {
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-h .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .dashboard-h .sidebar ul li {
+    margin: 15px 0;
+    cursor: pointer;
+  }
+  
+  .dashboard-h .main-content {
+    flex: 1;
+    background-color: #ecf0f1;
+    padding: 20px;
+  }
+  
+  .dashboard-h .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .dashboard-h .header h1 {
+    margin: 0;
+  }
+  
+  .dashboard-h .header button {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dashboard-h .content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .dashboard-h .stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .dashboard-h .stat-card {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 30%;
+    text-align: center;
+  }
+  
+  .dashboard-h .stat-card h3 {
+    margin: 0;
+  }
+  
+  .dashboard-h .stat-card p {
+    font-size: 24px;
+    margin: 10px 0 0;
+  }

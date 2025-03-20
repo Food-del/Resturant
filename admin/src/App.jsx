@@ -14,6 +14,8 @@ import CategoryList from './pages/CategoryList/CategoryList'
 import Feedback from './pages/Feedback/Feedback'
 import { CatUpdatePopUp } from './components/CatUpdatePopUp/CatUpdatePopUp'
 import Reports from './pages/Reports/Reports'
+import DashBoard from './pages/DashBoard/DashBoard'
+
 const App = () => {
  const [updatePopUp,setUpdatePopUp] =useState(false)
  const [catUpdatePopUp,setCatUpdatePopUp] =useState(false)
@@ -40,6 +42,7 @@ const App = () => {
           <Route path='/reservations' element={<Reservations url={url}/>} />
           <Route path='/feedback' element={<Feedback url={url}/>} />
           <Route path='/reports' element={<Reports url={url}/>} />
+          <Route path='/dashboard' element={<DashBoard url={url}/>} />
         </Routes>
       </div>
     </div>

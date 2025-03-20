@@ -12,8 +12,10 @@ import foodpackage from './food-delivery.png'
 import feedback from './talk.png'
 import download from './download.png'
 import report from './Report.png'
+import dash_board from './dash_board.png'
 
 export const assets ={
+    dash_board,
     logo,
     add_icon,
     order_icon,
