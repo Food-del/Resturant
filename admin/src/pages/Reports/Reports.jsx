@@ -4,7 +4,6 @@ import './Report.css'
 import { useEffect } from 'react'
 import axios from 'axios'
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import { assets } from '../../assets/assets.js'
 import autoTable from 'jspdf-autotable';
 
@@ -26,7 +25,6 @@ const Reports = ({ url }) => {
   };
 
 
-
   const downloadPDF = () => {
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pageWidth = pdf.internal.pageSize.width;
@@ -37,93 +35,127 @@ const Reports = ({ url }) => {
     const formattedRange = capitalizeFirstLetter(isRangeSelct);
     const title = `${formattedModel} Report of ${formattedRange}`;
 
-    // Add title at the center
+    // Add Image (Logo) - Left Side
+    const imageUrl = assets.logo;
+    const imageWidth = 30;  // Adjust size if needed
+    const imageHeight = 30;
+    const imageX = 10; // Left margin
+    const imageY = 10; // From top
+
+    pdf.addImage(imageUrl, 'JPEG', imageX, imageY, imageWidth, imageHeight);
+
+    // Add Address (Right-Aligned, Same Line as Logo)
+    const addressX = pageWidth - 10; // Right margin
+    const addressY = imageY + 5; // Align with the logo
+
+    pdf.setFont('helvetica', 'bold');
+    pdf.setFontSize(10);
+    pdf.text("Global Restaurant, Vaishnodevi Circle,", addressX, addressY, { align: 'right' });
+    pdf.text("Sardar Patel Ring Rd, Ahmedabad, Gujarat 382470", addressX, addressY + 7, { align: 'right' });
+    pdf.text("Contact: +91-6355348056", addressX, addressY + 14, { align: 'right' });
+
+    // Add Horizontal Line Below Header
+    const lineY = imageY + imageHeight + 5; // Below both logo and address
+    pdf.setDrawColor(0);
+    pdf.line(10, lineY, pageWidth - 10, lineY);
+
+    // Add Report Title (Centered)
     pdf.setFontSize(16);
     const titleWidth = pdf.getTextWidth(title);
-    pdf.text(title, (pageWidth - titleWidth) / 2, 15);
+    pdf.text(title, (pageWidth - titleWidth) / 2, lineY + 10);
 
-    // Define table headers based on the selected model
+    // Add Table Below Title
+    let tableStartY = lineY + 15;
+    
+    // Table Logic (Same as before)
     let headers = [];
     let tableData = [];
 
     switch (isModelSelct) {
-      case "userModel":
-        headers = ["Customer Name", "Email", "Phone No.", "Area", "City"];
-        tableData = data.map(item => [
-          item.name, item.email, item.phoneNo || "N/A", item.areaId?.area || "N/A", item.city
-        ]);
-        break;
+        case "userModel":
+            headers = ["Customer Name", "Email", "Phone No.", "Area", "City"];
+            tableData = data.map(item => [
+                item.name, item.email, item.phoneNo || "N/A", item.areaId?.area || "N/A", item.city
+            ]);
+            break;
 
-      case "foodModel":
-        headers = ["Dish Name", "Price", "Category", "Status", "Description"];
-        tableData = data.map(item => [
-          item.name, item.price, item.category?.name || "N/A",
-          item.status ? "Available" : "Out of Stock",
-          item.description.length > 15 ? item.description.substring(0, 15) + "..." : item.description
-        ]);
-        break;
+        case "foodModel":
+            headers = ["Dish Name", "Price", "Category", "Status", "Description"];
+            tableData = data.map(item => [
+                item.name, item.price, item.category?.name || "N/A",
+                item.status ? "Available" : "Out of Stock",
+                item.description.length > 15 ? item.description.substring(0, 15) + "..." : item.description
+            ]);
+            break;
 
-      case "ReservationModel":
-        headers = ["Customer Name", "People", "Time", "Date", "Status"];
-        tableData = data.map(item => [
-          `${item.First_Name} ${item.Last_name}`, item.People, item.Time,
-          new Date(item.Date).toLocaleDateString('en-GB'), item.Status
-        ]);
-        break;
+        case "ReservationModel":
+            headers = ["Customer Name", "People", "Time", "Date", "Status"];
+            tableData = data.map(item => [
+                `${item.First_Name} ${item.Last_name}`, item.People, item.Time,
+                new Date(item.Date).toLocaleDateString('en-GB'), item.Status
+            ]);
+            break;
 
-      case "orderModel":
-        headers = ["Customer", "Items", "Date", "Amount", "Area"];
-        tableData = data.map(item => [
-          item.address?.name,
-          item.items.map(subItem => `${subItem.name} x (${subItem.quantity})`).join(", "),
-          new Date(item.date).toLocaleDateString('en-GB'),
-          item.amount,
-          item.address?.areaName
-        ]);
-        break;
+        case "orderModel":
+            headers = ["Customer", "Items", "Date", "Amount", "Area"];
+            tableData = data.map(item => [
+                item.address?.name,
+                item.items.map(subItem => `${subItem.name} x (${subItem.quantity})`).join(", "),
+                new Date(item.date).toLocaleDateString('en-GB'),
+                item.amount,
+                item.address?.areaName
+            ]);
+            break;
 
-      case "Payments":
-        headers = ["Customer Name", "Email", "Amount", "Status", "Type"];
-        tableData = data.map(item => [
-          item.user?.name, item.user?.email, item.amount, item.status, item.type
-        ]);
-        break;
+        case "Payments":
+            headers = ["Customer Name", "Email", "Amount", "Status", "Type"];
+            tableData = data.map(item => [
+                item.user?.name, item.user?.email, item.amount, item.status, item.type
+            ]);
+            break;
 
-      case "FeedbackModel":
-        headers = ["Customer Name", "Date", "Time", "Is Public", "Review"];
-        tableData = data.map(item => [
-          item.userName,
-          new Date(item.feedbackDT).toLocaleDateString('en-GB'),
-          new Date(item.feedbackDT).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }),
-          item.isPublic ? "Yes" : "No",
-          item.feedbackText.length > 15 ? item.feedbackText.substring(0, 15) + "..." : item.feedbackText
-        ]);
-        break;
+        case "FeedbackModel":
+            headers = ["Customer Name", "Date", "Time", "Is Public", "Review"];
+            tableData = data.map(item => [
+                item.userName,
+                new Date(item.feedbackDT).toLocaleDateString('en-GB'),
+                new Date(item.feedbackDT).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }),
+                item.isPublic ? "Yes" : "No",
+                item.feedbackText.length > 15 ? item.feedbackText.substring(0, 15) + "..." : item.feedbackText
+            ]);
+            break;
 
-      default:
-        headers = ["No Data Available"];
-        tableData = [];
-        break;
+        default:
+            headers = ["No Data Available"];
+            tableData = [];
+            break;
     }
 
     // ✅ Use autoTable properly
     autoTable(pdf, {
-      head: [headers],
-      body: tableData,
-      startY: 25,
-      theme: "striped",
-      styles: { fontSize: 10, cellPadding: 3 },
-      headStyles: { fillColor: [100, 100, 100], textColor: 255 },
-      margin: { top: 25, bottom: 20 },
-      didDrawPage: () => {
-        pdf.setFontSize(10);
-        pdf.text(`Page ${pageNumber}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
-        pageNumber++;
-      }
+        head: [headers],
+        body: tableData,
+        startY: tableStartY,
+        theme: "striped",
+        styles: { fontSize: 10, cellPadding: 3 },
+        headStyles: { fillColor: [100, 100, 100], textColor: 255 },
+        margin: { top: 45, bottom: 20 },
+        didDrawPage: () => {
+            // Add Footer Email
+            pdf.setFontSize(8);
+            pdf.text("Email: sdpproject@gmail.com", pageWidth - 40, pageHeight - 10, { align: 'right' });
+
+            // Page number at the bottom-center
+            pdf.setFontSize(10);
+            pdf.text(`Page ${pageNumber}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+            pageNumber++;
+        }
     });
 
+    // Save the PDF
     pdf.save(`${title}.pdf`);
-  };
+};
+
 
 
 
