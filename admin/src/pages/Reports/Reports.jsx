@@ -18,6 +18,51 @@ const Reports = ({ url }) => {
   const [isSubmit, setIsSubmit] = useState(false)
   const [isModelSelct, setIsModelSelect] = useState("")
   const [isRangeSelct, setIsRangeSelect] = useState("")
+  const [isCostome,setIsCustome]=useState(false)
+  const [isSorted, setIsSorted] = useState(false);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState([]);
+
+  const sortData = () => {
+    const sortedData = [...filteredData].sort((a, b) => {
+      let key = "";
+  
+      switch (isModelSelct) {
+        case "userModel":
+          key = "name"; // Customer Name
+          break;
+        case "foodModel":
+          key = "name"; // Dish Name
+          break;
+        case "ReservationModel":
+          key = "First_Name"; // First Name (Reservations)
+          break;
+        case "orderModel":
+          key = "address"; // Customer Name in Orders
+          return isSorted 
+            ? b[key]?.name?.localeCompare(a[key]?.name)
+            : a[key]?.name?.localeCompare(b[key]?.name);
+        case "Payments":
+          key = "user"; // Customer Name in Payments
+          return isSorted 
+            ? b[key]?.name?.localeCompare(a[key]?.name)
+            : a[key]?.name?.localeCompare(b[key]?.name);
+        case "FeedbackModel":
+          key = "userName"; // Customer Name in Feedback
+          break;
+        default:
+          return 0; // No sorting if no matching model
+      }
+  
+      return isSorted
+        ? b[key]?.toString().localeCompare(a[key]?.toString())
+        : a[key]?.toString().localeCompare(b[key]?.toString());
+    });
+  
+    setFilteredData(sortedData);
+    setIsSorted(!isSorted);
+  };
+  
 
 
   const capitalizeFirstLetter = (string) => {
@@ -78,14 +123,14 @@ const Reports = ({ url }) => {
     switch (isModelSelct) {
         case "userModel":
             headers = ["Customer Name", "Email", "Phone No.", "Area", "City"];
-            tableData = data.map(item => [
+            tableData = filteredData.map(item => [
                 item.name, item.email, item.phoneNo || "N/A", item.areaId?.area || "N/A", item.city
             ]);
             break;
 
         case "foodModel":
             headers = ["Dish Name", "Price", "Category", "Status", "Description"];
-            tableData = data.map(item => [
+            tableData = filteredData.map(item => [
                 item.name, item.price, item.category?.name || "N/A",
                 item.status ? "Available" : "Out of Stock",
                 item.description.length > 15 ? item.description.substring(0, 15) + "..." : item.description
@@ -94,7 +139,7 @@ const Reports = ({ url }) => {
 
         case "ReservationModel":
             headers = ["Customer Name", "People", "Time", "Date", "Status"];
-            tableData = data.map(item => [
+            tableData = filteredData.map(item => [
                 `${item.First_Name} ${item.Last_name}`, item.People, item.Time,
                 new Date(item.Date).toLocaleDateString('en-GB'), item.Status
             ]);
@@ -102,7 +147,7 @@ const Reports = ({ url }) => {
 
         case "orderModel":
             headers = ["Customer", "Items", "Date", "Amount", "Area"];
-            tableData = data.map(item => [
+            tableData = filteredData.map(item => [
                 item.address?.name,
                 item.items.map(subItem => `${subItem.name} x (${subItem.quantity})`).join(", "),
                 new Date(item.date).toLocaleDateString('en-GB'),
@@ -113,14 +158,14 @@ const Reports = ({ url }) => {
 
         case "Payments":
             headers = ["Customer Name", "Email", "Amount", "Status", "Type"];
-            tableData = data.map(item => [
+            tableData = filteredData.map(item => [
                 item.user?.name, item.user?.email, item.amount, item.status, item.type
             ]);
             break;
 
         case "FeedbackModel":
             headers = ["Customer Name", "Date", "Time", "Is Public", "Review"];
-            tableData = data.map(item => [
+            tableData = filteredData.map(item => [
                 item.userName,
                 new Date(item.feedbackDT).toLocaleDateString('en-GB'),
                 new Date(item.feedbackDT).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }),
@@ -181,6 +226,8 @@ const Reports = ({ url }) => {
       setIsDateRequired(true);
     }
     setModel(selectedValue)
+    setSelectedFilters({}); // Reset filters
+    setFilteredData([]); 
   };
 
   const handleSelectRange = (event) => {
@@ -211,6 +258,9 @@ const Reports = ({ url }) => {
 
       console.log(endDate)
       setAll(false)
+    } else if (selectedRange === "Custome") {
+      startDate=startingDate;
+      endDate=endingDate;
     } else {
       setAll(true)
       startDate = null;
@@ -245,7 +295,7 @@ const Reports = ({ url }) => {
           setData(res.data.data)
           setIsSubmit(true)
           setIsModelSelect(model)
-
+         
         }
       } catch (error) {
         console.error("Error fetching reports:", error.response?.data || error.message);
@@ -253,13 +303,40 @@ const Reports = ({ url }) => {
 
     }
   }
+  
+  // useEffect(() => {
+  //   // console.log(data)
+  //   console.log(isRangeSelct)
+  // }, [isRangeSelct])
+
+ // Handle filter change
+ const handleFilterChange = (filterKey, value) => {
+  console.log("Filter Key:", filterKey, "Value Selected:", value);
+  setSelectedFilters((prevFilters) => ({
+    ...prevFilters,
+    [filterKey]: value,
+  }));
+};
+
+  // Apply filtering when filters change
   useEffect(() => {
-    // console.log(data)
-    console.log(isRangeSelct)
-  }, [isRangeSelct])
-
-
-
+    let filtered = [...data];
+  
+    Object.entries(selectedFilters).forEach(([key, value]) => {
+      if (value !== "All") {
+        filtered = filtered.filter((item) =>
+          key.includes(".") // Check if key is nested (e.g., "areaId.area")
+            ? key.split(".").reduce((acc, k) => acc?.[k], item) === value
+            : item[key] === value
+        );
+      }
+    });
+  
+    setFilteredData(filtered);
+  }, [selectedFilters, data]);
+  useEffect(() => {
+    setFilteredData(data); // ✅ Update filteredData whenever data changes
+  }, [data]);
 
   return (
     <div className='outer'>
@@ -281,14 +358,39 @@ const Reports = ({ url }) => {
           </div>
           <div className={showSecList ? 'list' : 'hide'}>
             <label htmlFor="second-list">Date range</label>
-            <select onChange={handleSelectRange} id="second-list" name="second-list" required={isDateRequired}>
+            <select onChange={(event)=>{handleSelectRange(event);event.target.value=="Custome"?setIsCustome(true):setIsCustome(false)}} id="second-list" name="second-list" required={isDateRequired}>
               <option value="" disabled selected>Select Time</option>
               <option value="Last Month">Last Month</option>
               <option value="This Month">This Month</option>
               <option value="This Week">This Week</option>
               <option value="Today">Today</option>
+              <option value="Custome">Custome</option>
               <option value="All">All</option>
             </select>
+          </div>
+         <div className={isCostome ? 'Dates' : 'hide'}>
+            <div className="st Dates">
+              <label htmlFor="startdate" required={isCostome}>Start Date</label>
+              <input
+                type="date"
+                name="startdate"
+                onChange={(e) => {
+                  const formattedDate = new Date(e.target.value).toString();
+                  setStartDate(formattedDate);
+                }}
+              />
+            </div>
+            <div className="en Dates">
+              <label htmlFor="lastdate" required={isCostome}>Last Date</label>
+              <input
+                type="date"
+                name="lastdate"
+                onChange={(e) => {
+                  const formattedDate = new Date(e.target.value).toString();
+                  setEndDate(formattedDate);
+                }}
+              />
+            </div>
           </div>
           <button type='submit'>Generate</button>
           {/* <div className='Downlode'>
@@ -310,26 +412,74 @@ const Reports = ({ url }) => {
       {isSubmit ? (
         <div className='body'>
           <div className='list-data'>
+          {isSubmit && data.length > 0 && (
+          <button type='button' onClick={sortData}> ⬆⬇</button>
+            )}
             <div className='data-heading'>
+          
               {isModelSelct === "userModel" && (
                 <>
-                  <b>Caustomer Name</b> <b>Email</b> <b>Phone no.</b> <b>Area</b> <b>City</b>
+                  <b>Caustomer Name</b> <b>Email</b> <b>Phone no.</b> 
+                  <select name="type" id="type" onChange={(e) => handleFilterChange("areaId.area", e.target.value)}>
+                  <option value="" disabled selected>Area</option>
+                    <option value="Navrangpura">Navrangpura</option>
+                    <option value="Maninagar">Maninagar</option>
+                    <option value="Ghatlodiya">Ghatlodiya</option>
+                    <option value="Vastrapur">Vastrapur</option>
+                    <option value="Satelite">Satelite</option>
+                    <option value="Nikol">Nikol</option>
+                    <option value="Paldi">Paldi</option>
+                    <option value="Lal Darwaja">Lal Darwaja</option>
+                    <option value="All">All</option>
+                  </select>
+                  <b>City</b>
                 </>
               )}
               {isModelSelct === "orderModel" && (
                 <>
-                  <b>Customer</b> <b>Items</b> <b>Date</b> <b>Amount</b> <b>Area</b>
+                  <b>Customer</b> <b>Items</b> <b>Date</b> <b>Amount</b> 
+                  <select name="type" id="type" onChange={(e) => handleFilterChange("address.areaName", e.target.value)}>
+                  <option value="" disabled selected>Area</option>
+                    <option value="Navrangpura">Navrangpura</option>
+                    <option value="Maninagar">Maninagar</option>
+                    <option value="Ghatlodiya">Ghatlodiya</option>
+                    <option value="Vastrapur">Vastrapur</option>
+                    <option value="Satelite">Satelite</option>
+                    <option value="Nikol">Nikol</option>
+                    <option value="Paldi">Paldi</option>
+                    <option value="Lal Darwaja">Lal Darwaja</option>
+                    <option value="All">All</option>
+                  </select>
                 </>
 
               )}
               {isModelSelct === "foodModel" && (
                 <>
-                  <b>Dish Name</b>  <b>Price</b> <b>Category</b> <b>Status</b> <b>Description</b>
+                  <b>Dish Name</b>  <b>Price</b> 
+                  <select name="type" id="type" onChange={(e) => handleFilterChange("category.name", e.target.value)}>
+                  <option value="" disabled selected>Categoty</option>
+                    <option value="Gujrati ">Gujrati</option>
+                    <option value="Punjabi">Punjabi</option>
+                    <option value="Deserts">Deserts</option>
+                    <option value="Rajasthani">Rajasthani</option>
+                    <option value="South-Indian">South-Indian</option>
+                    <option value="Marathi-Food">Marathi-Food</option>
+                    <option value="Fast-Food">Fast-Food</option>
+                    <option value="Extra">Extra</option>
+                    <option value="All">All</option>
+                  </select>
+                   <b>Status</b> <b>Description</b>
                 </>
               )}
               {isModelSelct === "ReservationModel" && (
                 <>
-                  <b>Caustomer Name</b> <b>People</b> <b>Time</b> <b>Date</b> <b>Status</b>
+                  <b>Caustomer Name</b> <b>People</b> <b>Time</b> <b>Date</b> 
+                  <select name="type" id="type" onChange={(e) => handleFilterChange("Status", e.target.value)}>
+                  <option value="" disabled selected>Status</option>
+                    <option value="Booked">Booked</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="All">All</option>
+                  </select>
                 </>
               )}
               {isModelSelct === "FeedbackModel" && (
@@ -339,14 +489,20 @@ const Reports = ({ url }) => {
               )}
               {isModelSelct === "Payments" && (
                 <>
-                  <b>Caustomer Name</b> <b>Email</b> <b>Amount</b> <b>Status</b> <b>Type</b>
+                  <b>Caustomer Name</b> <b>Email</b> <b>Amount</b> <b>Status</b> 
+                  <select name="type" id="type"  onChange={(e) =>  handleFilterChange("type", e.target.value)}>
+                  <option value="" disabled selected>Type</option>
+                    <option value="Online Order">Order</option>
+                    <option value="Reservation">Reservation</option>
+                    <option value="All">All</option>
+                  </select>
                 </>
               )}
 
             </div>
             <div>
-              {data.length > 0 ? (
-                data.map((item) => {
+              {filteredData .length > 0 ? (
+                filteredData.map((item) => {
                   switch (isModelSelct) {
                     case "userModel":
                       return (
@@ -366,7 +522,9 @@ const Reports = ({ url }) => {
                           <p>{item.price}</p>
                           <p>{item.category?.name || "N/A"}</p>
                           <p>{item.status ? "Available" : "Out of Stock"}</p>
-                          <p>{item.description.length > 15 ? item.description.substring(0, 15) + "..." : item.description}</p>
+                          <p>{item.description ? (item.description.length > 15 ? item.description.substring(0, 15) + "..." : item.description) : "N/A"}</p>
+
+
                         </div>
                       );
 
@@ -386,10 +544,10 @@ const Reports = ({ url }) => {
                         <div key={item.id} className="dataList-odr">
                           <p>{item.address?.name}</p>
                           <p>
-                            {item.items.map((subItem, index) => (
+                            {item.items?(item.items.map((subItem, index) => (
                               subItem.name + " x (" + subItem.quantity + ") "
 
-                            ))}
+                            ))):"N/A"}
                           </p>
                           <p>{new Date(item.date).toLocaleDateString('en-GB')}</p>
                           <p>{item.amount}</p>
@@ -399,6 +557,7 @@ const Reports = ({ url }) => {
 
                     case "Payments":
                       return (
+                        
                         <div key={item.id} className="dataList-pay">
                           <p>{item.user?.name}</p>
                           <p>{item.user?.email}</p>
@@ -414,7 +573,9 @@ const Reports = ({ url }) => {
                           <p>{new Date(item.feedbackDT).toLocaleDateString('en-GB')}</p>
                           <p>{new Date(item.feedbackDT).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })}</p>
                           <p>{item.isPublic === true ? "Yes" : "No"}</p>
-                          <p>{item.feedbackText.length > 15 ? item.feedbackText.substring(0, 15) + "..." : item.feedbackText}</p>
+                          <p>{item.feedbackText?(item.feedbackText.length > 15 ? item.feedbackText.substring(0, 15) + "..." : item.feedbackText):"N/A"}</p>
+                          
+                          
                         </div>
                       );
                     default:

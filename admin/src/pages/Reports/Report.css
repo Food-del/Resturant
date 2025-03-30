@@ -75,6 +75,17 @@
     background-color: rgb(196, 196, 196);
 }
 
+.data-heading select{
+    background-color: rgb(196, 196, 196);
+    border: none;
+    width: 100px;
+    font-size: 15px;
+    font-weight: 700;
+    margin-left: -20px;
+    cursor: pointer;
+}
+
+
 .dataList-user{
     display: grid;
     grid-template-columns: 18% 23% 18% 17% 15% ;
@@ -155,4 +166,41 @@
     padding-top: 3px;
 
 
+}
+
+.list-data button{
+    width:18px;
+    height: 18px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-top: -20px;
+    margin-bottom: -30px;
+    position: relative;
+    left: 10px;
+    font-size: 20px;
+    top:35px;
+}
+.st , .en{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-left: 30px;
+}
+
+.Dates{
+    display: flex;
+    
+}
+.Dates input{
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    width: 200px;
+    color: rgb(54, 54, 54);
+}
+
+.Dates label{
+  font-weight: 600;
+  color: rgb(54, 54, 54);
 }
