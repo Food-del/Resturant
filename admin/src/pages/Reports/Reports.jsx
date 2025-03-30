@@ -33,8 +33,12 @@ const Reports = ({ url }) => {
 
     const formattedModel = capitalizeFirstLetter(isModelSelct.replace("Model", ""));
     const formattedRange = capitalizeFirstLetter(isRangeSelct);
-    const title = `${formattedModel} Report of ${formattedRange}`;
-
+    let title=""
+    if (isModelSelct==="foodModel"){
+      title = `Current Menu Report`;
+    }else{
+      title = `${formattedModel} Report of ${formattedRange}`;
+    }
     // Add Image (Logo) - Left Side
     const imageUrl = assets.logo;
     const imageWidth = 30;  // Adjust size if needed
